@@ -1,0 +1,30 @@
+# Runs on every push and pull request. `next build` alone is not enough of a gate:
+# it compiles fine when a constant has lost its `source` or a removed identifier has
+# crept back, which is exactly what selftest exists to catch. Both run here so a
+# broken integrity rule fails before Vercel promotes the deploy.
+
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 22.x matches Vercel's current default, so CI fails the same way production would.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      - name: selftest
+        run: npm run selftest
+
+      - name: build
+        run: npm run build
