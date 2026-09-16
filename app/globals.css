@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Degular, as used on pearlresearch.ai. Commercial face, not redistributed with this repo.
+   Put licensed files at public/fonts/degular-{regular,medium,semibold}.woff2 and they load here;
+   with the files absent the browser silently falls through to Hanken Grotesk. */
+@font-face {
+  font-family: 'Degular';
+  src: url('/fonts/degular-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Degular';
+  src: url('/fonts/degular-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Degular';
+  src: url('/fonts/degular-semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Tokens are the ones set in the Claude Design project (PRL Tracker.dc.html). Dark is the
+   default so a cold load never flashes light; the toggle writes data-prl-theme on <html>. */
+:root {
+  --sans: 'Degular', 'Hanken Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --bg: #08090a;
+  --raise: #0e1012;
+  --line: #1f2225;
+  --hair: #161819;
+  --ink: #efeae0;
+  --ink2: #a8a39a;
+  --muted: #6e6a63;
+
+  --accent: oklch(0.68 0.12 240);
+  --pos: oklch(0.68 0.11 165);
+  --neg: oklch(0.66 0.15 32);
+
+  --s1: oklch(0.68 0.12 240);
+  --s2: oklch(0.68 0.12 32);
+  --s3: oklch(0.68 0.12 165);
+  --s4: oklch(0.68 0.12 92);
+  --s5: oklch(0.68 0.12 330);
+  --s6: oklch(0.68 0.12 285);
+  --s7: oklch(0.62 0.01 90);
+
+  color-scheme: dark;
+}
+
+:root[data-prl-theme='light'] {
+  --bg: #f6f3ed;
+  --raise: #fffdf9;
+  --line: #ddd8cd;
+  --hair: #e9e4da;
+  --ink: #0c0d0e;
+  --ink2: #514d46;
+  --muted: #8a857b;
+
+  --accent: oklch(0.52 0.13 240);
+  --pos: oklch(0.5 0.11 165);
+  --neg: oklch(0.52 0.16 32);
+
+  --s1: oklch(0.52 0.13 240);
+  --s2: oklch(0.52 0.13 32);
+  --s3: oklch(0.5 0.12 165);
+  --s4: oklch(0.54 0.12 92);
+  --s5: oklch(0.52 0.13 330);
+  --s6: oklch(0.52 0.13 285);
+  --s7: oklch(0.55 0.01 90);
+
+  color-scheme: light;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+}
+
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+button,
+select,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+input[type='number'] {
+  appearance: textfield;
+}
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.recharts-cartesian-axis-tick-value,
+svg text {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: var(--line);
+}

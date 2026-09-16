@@ -1,0 +1,11 @@
+{
+  "_comment": "Vertical reference lines drawn on every time-series panel. Heights outside the ingested range are ignored at render time.",
+  "events": [
+    {
+      "height": 99000,
+      "label": "V3 salted noise-seed fork",
+      "date": "2026-08-11",
+      "note": "Activated at #98,900; ingestion starts at #99,000. Pre-fork blocks are a different consensus regime and are not ingested."
+    }
+  ]
+}

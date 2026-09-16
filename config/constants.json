@@ -1,0 +1,21 @@
+{
+  "_comment": "Protocol and definitional constants. These are facts with sources, not tunable assumptions: nothing in the UI edits them, and no chart depends on a number that is not either on-chain, from the market feed, or listed here.",
+  "emission": {
+    "S": 2100000000,
+    "H": 650226,
+    "targetBlockSeconds": 194,
+    "retargetFilterBlocks": 2016,
+    "genesisTimeUnix": 1777280401,
+    "source": "Pearl whitepaper: E(t) = S·H/((t+H)(t+H−1)), cumulative S·t/(t+H), 194s target, WTEMA N=2016. Genesis time is the timestamp of block #1 on chain.",
+    "supplyBaselineHeight": 99000,
+    "supplyBaselineNote": "Ingestion starts at #99,000, so cumulative supply is seeded with S·t/(t+H) at that height and then accumulates observed coinbase subsidies. The seed is the whitepaper curve evaluated at a height, not an estimate."
+  },
+  "hashrate": {
+    "difficultyToWorkExponent": 48,
+    "poolDifficultyMultiplier": 65536,
+    "source": "H = D · 2^48 / T with T the observed average block time. Reproduces HeroMiners (25.78 EH/s) and AlphaPool (25.78 EH/s) at block #111,716 to within a few percent. Pool dashboards quote difficulty at 65,536× the node value."
+  },
+  "market": {
+    "source": "CoinGecko daily close for id pearl-2. Used only where a chart is explicitly denominated in USD."
+  }
+}

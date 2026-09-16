@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+.env
+.env.local
+.DS_Store
+# The chain cache is deliberately NOT ignored: committing data/ is how the Vercel build
+# gets its data. Drop these lines if you would rather ingest in CI.
+# data/blocks.ndjson
+# data/checkpoint.json
+# data/market.json

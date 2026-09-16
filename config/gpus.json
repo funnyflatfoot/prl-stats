@@ -1,0 +1,41 @@
+{
+  "_comment": "Third-party hardware benchmarks and published pool fees for the synthetic-miner selector on panel 4. These are citable figures, not assumptions: each row carries the source it came from. The only number the dashboard does not know is the operator's power price, which is a blank input. Add rows as better benchmarks appear; keep the source field honest.",
+  "gpus": [
+    {
+      "id": "h100",
+      "label": "NVIDIA H100 SXM",
+      "hashratePHs": 0.7,
+      "watts": 700,
+      "source": "per-card figure published by AlphaPool (pearl.alphapool.tech); 700W is NVIDIA's SXM TDP"
+    },
+    {
+      "id": "rtx5090",
+      "label": "NVIDIA RTX 5090",
+      "hashratePHs": 0.309,
+      "watts": 575,
+      "source": "hashrate.no/coins/PRL/benchmarks, 309 TH/s; 575W is NVIDIA's TDP"
+    },
+    {
+      "id": "rtx3090",
+      "label": "NVIDIA RTX 3090",
+      "hashratePHs": 0.075,
+      "watts": 350,
+      "stale": true,
+      "source": "75 TH/s, quoted May 2026 before the June and August forks changed the hashrate scale; treat as indicative only"
+    }
+  ],
+  "pools": [
+    { "id": "solo", "label": "Solo, no pool", "feePct": 0, "source": "no fee by definition" },
+    { "id": "herominers", "label": "HeroMiners", "feePct": 0, "source": "pearl.herominers.com/api/stats, config.fee = 0" },
+    { "id": "kryptex", "label": "Kryptex Pool", "feePct": 1, "source": "pool.kryptex.com/prl, 1% PPS+" },
+    { "id": "alphapool", "label": "AlphaPool", "feePct": 1, "source": "pearl.alphapool.tech/api/stats, feePercent = 1" },
+    { "id": "luckypool", "label": "LuckyPool", "feePct": 1, "source": "lordofpearls.xyz/pools, 1% PPLNS" },
+    { "id": "pearlhash", "label": "PearlHash", "feePct": 1, "source": "pearlhash.xyz states 1% pool fee, 0% miner fee" },
+    {
+      "id": "official-dc",
+      "label": "Official datacenter pool (H100/H200)",
+      "feePct": 20,
+      "source": "20% fee for datacenter cards, reported by AlphaMine and Hashrate Index"
+    }
+  ]
+}

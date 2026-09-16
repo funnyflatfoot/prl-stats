@@ -1,0 +1,40 @@
+{
+  "_comment": "Coinbase address -> mining entity. flag: verified (the pool's own published block heights resolve to this address) | inferred (only its reported block counts match) | unknown (no attribution). Every row in the UI shows this flag. Add addresses here as attribution improves; never upgrade a flag without evidence in 'evidence'.",
+  "entities": {
+    "prl1puv0gqv4x0wd0ylwz086y3sqrg4a6umza9r08aecehjrmdqq7mctsmqaqsh": {
+      "name": "Kryptex Pool",
+      "flag": "verified",
+      "evidence": "pool.kryptex.com/prl/blocks heights resolve to this coinbase (checked 2026-09-11)"
+    },
+    "prl1pksfzrn8g760gmcqy65a4tl30eyv25eksl5sf8y332kes6fwx9pjszgymmz": {
+      "name": "HeroMiners",
+      "flag": "verified",
+      "evidence": "pearl.herominers.com/api/stats pool.blocks heights resolve to this coinbase (checked 2026-09-11)"
+    },
+    "prl1p2w3ruv4qtw7hcxy7gksge6plefxegfxpfcl0kv8pujadsm9a5t2qtvxq7h": {
+      "name": "AlphaPool",
+      "flag": "verified",
+      "evidence": "pearl.alphapool.tech/api/stats recentBlocks heights resolve to this coinbase (checked 2026-09-11)"
+    },
+    "prl1p50ltku2jjcwdxh4nzjrw98nwdswdn25qdkr2fdtw8hsq3qu9cdhscchnnm": {
+      "name": "PearlHash",
+      "flag": "inferred",
+      "evidence": "24h block count matched PearlHash's reported count (131) on 2026-09-11; no published block list"
+    },
+    "prl1pspr7jpw2a6ed0mw0h03zmu7huxnfjh46j3lzgsrez0ysvh7mcq4q4ztsxp": {
+      "name": "LuckyPool",
+      "flag": "inferred",
+      "evidence": "24h block count (21) matched LuckyPool's reported 19-20 on 2026-09-11"
+    },
+    "prl1pgr2znrzz8nwu2lrw4phrzaqqa8ukt76qsqc29wxgcwgalanur7zsk8w070": {
+      "name": "Unlabeled A",
+      "flag": "unknown",
+      "evidence": "coinbase splits ~1% to prl1pvwqp5en..., the signature of a pool taking its own fee"
+    },
+    "prl1p8tt7gr5tsxvua4lgfmp83vyaak32pfy4gn5a5cka30vrvcl55uus8q3rh7": {
+      "name": "Unlabeled B",
+      "flag": "unknown",
+      "evidence": "first block #106,187 on 2026-08-30; steady share since"
+    }
+  }
+}

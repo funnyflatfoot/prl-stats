@@ -1,0 +1,20 @@
+{
+  "_comment": "Explorer scrape configuration. ACTION_ID rotates on every explorer redeploy; see README 'Rotating the action id'. Ingestion fails loudly when it is stale rather than writing partial data.",
+  "baseUrl": "https://explorer.pearlresearch.ai",
+  "network": "mainnet",
+  "actionId": "40dcb07d2a02b501b109109b0a6869d2cf455eef61",
+  "actionIdCapturedAt": "2026-09-11",
+  "startHeight": 99000,
+  "concurrency": 6,
+  "coinbaseBatchSize": 40,
+  "checkpointEvery": 250,
+  "maxRetries": 4,
+  "retryBaseMs": 800,
+  "requestTimeoutMs": 30000,
+  "market": {
+    "coingeckoId": "pearl-2",
+    "vsCurrency": "usd",
+    "historyDays": 120,
+    "apiBase": "https://api.coingecko.com/api/v3"
+  }
+}

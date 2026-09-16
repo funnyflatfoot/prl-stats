@@ -1,0 +1,10 @@
+{
+  "_comment": "Last publicly reported proof-of-useful-work overhead. This is the one figure on the page that is NOT derived from the chain or the price feed: Pearl publishes it, and it is copied here by hand. It therefore carries an asOf date and is labelled 'reported' wherever it renders, so it is never mistaken for a measurement. Update it on your weekly check: set percent, asOf (UTC date), source and url, and leave the rest alone. Setting percent to null puts the slot back into its 'not recorded' state rather than showing a stale number.",
+  "percent": null,
+  "asOf": null,
+  "source": "",
+  "url": "",
+  "label": "PoUW overhead",
+  "definition": "Reported cost of running useful work under consensus, as a percentage above the same work run unverified.",
+  "staleAfterDays": 7
+}
