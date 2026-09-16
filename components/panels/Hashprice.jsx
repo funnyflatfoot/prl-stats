@@ -209,7 +209,7 @@ export default function Hashprice({ data, events, meta, constants, hardware, ele
               )
             }}
           />
-          {EventLines({ events })}
+          {EventLines({ events, yAxisId: 'prl' })}
           {usdPerKwh != null && anyNegative ? <ReferenceLine yAxisId="usd" y={0} stroke={NEG} strokeDasharray="4 4" /> : null}
           <Line
             yAxisId="prl"

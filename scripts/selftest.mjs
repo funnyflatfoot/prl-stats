@@ -35,6 +35,17 @@ check('size / tx_count', h?.size === 119604 && h?.txCount === 26)
 check('coinbase txid is txids[0]', h?.coinbaseTxid === '0c7d579dce5d5bae9024d938f4a06860b253a040ef3a27f4445b376c998d4e72')
 check('junk payload returns null', parseBlockHeader('nothing to see') === null)
 
+// The live explorer emits a CSS style object before the block JSON. Anchoring on the first
+// height key lands on that instead, and the non-numeric value used to read back as 0, so every
+// row shared a height and the store collapsed to one block.
+const styled = `7:["$","$L19",null,{"style":{"height":"100vh","minHeight":"100vh"},"block":{"hash":"9d59c8bd","height":111700,"version":536870912,"merkleroot":"62c74d5f","time":1789136301,"bits":"1800d446","difficulty":20232874.21441979,"size":119604,"tx_count":26,"confirmations":11},"txids":["0c7d579dce5d5bae9024d938f4a06860b253a040ef3a27f4445b376c998d4e72"]}]`.replace(
+  /"/g,
+  '\\"'
+)
+const sh = parseBlockHeader(styled)
+check('css height before block json does not become the height', sh?.height === 111700, `got ${sh?.height}`)
+check('fields still read past the css anchor', sh?.time === 1789136301 && sh?.size === 119604)
+
 process.stdout.write('\nemission\n')
 const reward = subsidyAt(111716, em)
 check('subsidy at #111,716 matches observed coinbase 2352.0165', Math.abs(reward - 2352.0165) < 0.001, `got ${reward}`)

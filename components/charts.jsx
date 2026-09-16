@@ -52,11 +52,15 @@ export function TipBox({ title, rows }) {
 }
 
 // Consensus changes, drawn on every time-series panel from config/events.json.
-export function EventLines({ events }) {
+// A panel that names its axes has to say which one the line belongs to: recharts looks for the
+// default axis id 0 when none is given and throws rather than skipping the line. Hashprice runs
+// two axes, the rest run one, where passing nothing keeps the default.
+export function EventLines({ events, yAxisId }) {
   return events.map(e => (
     <ReferenceLine
       key={e.height}
       x={e.date}
+      yAxisId={yAxisId}
       stroke={AXIS}
       strokeDasharray="3 4"
       label={{ value: `#${e.height}`, position: 'insideTopLeft', fill: 'var(--muted)', fontSize: 10 }}
