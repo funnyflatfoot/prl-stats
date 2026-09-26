@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import Link from 'next/link'
 import { derive } from '@/lib/derive'
 import { Kpi, KpiRow, Eyebrow } from '@/components/ui'
 import SecurityBudget from '@/components/panels/SecurityBudget'
@@ -108,6 +109,12 @@ export default function Dashboard({ packed, miners, market, checkpoint, constant
             <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted">Research Labs</span>
           </div>
           <div className="flex items-center gap-2.5">
+            <div className="flex border border-line">
+              <span className="bg-raise px-3 py-1.5 font-mono text-[10px] uppercase tracking-rail text-ink">Chain</span>
+              <Link href="/miners" className="px-3 py-1.5 font-mono text-[10px] uppercase tracking-rail text-muted hover:text-ink2">
+                Miners
+              </Link>
+            </div>
             <div className="flex border border-line">
               {RANGES.map(r => (
                 <button

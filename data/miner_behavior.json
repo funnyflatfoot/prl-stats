@@ -1,0 +1,4043 @@
+{
+ "tip_height": 116031,
+ "tip_time": 1789900878,
+ "n_tx": 712066,
+ "n_outputs": 10853096,
+ "n_addresses": 441201,
+ "sinks": [
+  "unspent",
+  "safetrade",
+  "otc",
+  "pearl_trade",
+  "bridge",
+  "pool",
+  "system",
+  "hub",
+  "fee_dust"
+ ],
+ "labelled_recipients_summary": {
+  "system:\u00b6 Compute": {
+   "n": 7,
+   "recv": 4479513.62
+  },
+  "pool:PearlerPool": {
+   "n": 1,
+   "recv": 31024.42
+  },
+  "pool:LuckyPool": {
+   "n": 1,
+   "recv": 2.83
+  },
+  "pool:PearlHash": {
+   "n": 1,
+   "recv": 43.42
+  },
+  "pool:Oyster Pool": {
+   "n": 1,
+   "recv": 2595.05
+  },
+  "system:MBG Pearlscription": {
+   "n": 1,
+   "recv": 41.57
+  },
+  "pearl_trade:Pearl Trade Deposits": {
+   "n": 4,
+   "recv": 61.06
+  },
+  "pool:Hero Miners": {
+   "n": 1,
+   "recv": 35.09
+  },
+  "pool:Suprnova.cc": {
+   "n": 1,
+   "recv": 2.58
+  }
+ },
+ "totals": {
+  "miners": 72379,
+  "recv": 297305793.5,
+  "fate": {
+   "unspent": 245077513.95,
+   "safetrade": 18719699.15,
+   "otc": 30817462.83,
+   "pearl_trade": 177022.54,
+   "bridge": 2084031.42,
+   "pool": 404159.31,
+   "system": 25907.52,
+   "hub": 0,
+   "fee_dust": 0
+  },
+  "status": {
+   "held_all": 19951,
+   "partial": 7953,
+   "spent_all": 44475
+  },
+  "venue": {
+   "safetrade": 47634,
+   "otc": 44556,
+   "both": 42782,
+   "bridge": 40516,
+   "any_venue": 49845,
+   "spent_no_venue": 468,
+   "unspent_only": 22066
+  },
+  "dominant": {
+   "unspent": 50830,
+   "safetrade": 14208,
+   "otc": 6347,
+   "bridge": 488,
+   "other": 506
+  }
+ },
+ "by_bucket": [
+  {
+   "bucket": "<10",
+   "miners": 9329,
+   "recv": 37343.11,
+   "fate": {
+    "unspent": 24954.49,
+    "safetrade": 10176.32,
+    "otc": 1654.4,
+    "pearl_trade": 14.99,
+    "bridge": 355.29,
+    "pool": 108.32,
+    "system": 79.3,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 4316,
+    "partial": 321,
+    "spent_all": 4692
+   },
+   "venue": {
+    "safetrade": 4158,
+    "otc": 2443,
+    "both": 2159,
+    "bridge": 1901,
+    "any_venue": 4544,
+    "spent_no_venue": 51,
+    "unspent_only": 4734
+   },
+   "dominant": {
+    "unspent": 6418,
+    "safetrade": 2361,
+    "otc": 446,
+    "bridge": 60,
+    "other": 44
+   }
+  },
+  {
+   "bucket": "10-100",
+   "miners": 15019,
+   "recv": 608425.66,
+   "fate": {
+    "unspent": 373249.26,
+    "safetrade": 179229.53,
+    "otc": 41249.27,
+    "pearl_trade": 1094.1,
+    "bridge": 10046.44,
+    "pool": 2495.33,
+    "system": 1061.74,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 3786,
+    "partial": 1996,
+    "spent_all": 9237
+   },
+   "venue": {
+    "safetrade": 9624,
+    "otc": 7782,
+    "both": 7129,
+    "bridge": 5859,
+    "any_venue": 10426,
+    "spent_no_venue": 71,
+    "unspent_only": 4522
+   },
+   "dominant": {
+    "unspent": 9456,
+    "safetrade": 4631,
+    "otc": 716,
+    "bridge": 147,
+    "other": 69
+   }
+  },
+  {
+   "bucket": "100-1k",
+   "miners": 22504,
+   "recv": 9614658.98,
+   "fate": {
+    "unspent": 5851702.62,
+    "safetrade": 2146505.22,
+    "otc": 1302408.79,
+    "pearl_trade": 8335.38,
+    "bridge": 163224.86,
+    "pool": 138370.06,
+    "system": 4112.13,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 2293,
+    "partial": 3213,
+    "spent_all": 16998
+   },
+   "venue": {
+    "safetrade": 18582,
+    "otc": 18748,
+    "both": 18260,
+    "bridge": 17394,
+    "any_venue": 19194,
+    "spent_no_venue": 327,
+    "unspent_only": 2983
+   },
+   "dominant": {
+    "unspent": 14535,
+    "safetrade": 4712,
+    "otc": 2731,
+    "bridge": 188,
+    "other": 338
+   }
+  },
+  {
+   "bucket": "1k-10k",
+   "miners": 21912,
+   "recv": 66186775.51,
+   "fate": {
+    "unspent": 51810475.43,
+    "safetrade": 7203358.66,
+    "otc": 6313138.02,
+    "pearl_trade": 39869.96,
+    "bridge": 616659.53,
+    "pool": 192894.52,
+    "system": 10379.28,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 7373,
+    "partial": 1944,
+    "spent_all": 12595
+   },
+   "venue": {
+    "safetrade": 14035,
+    "otc": 14314,
+    "both": 13999,
+    "bridge": 14115,
+    "any_venue": 14406,
+    "spent_no_venue": 19,
+    "unspent_only": 7487
+   },
+   "dominant": {
+    "unspent": 17081,
+    "safetrade": 2474,
+    "otc": 2227,
+    "bridge": 76,
+    "other": 54
+   }
+  },
+  {
+   "bucket": "10k-100k",
+   "miners": 3182,
+   "recv": 78162816.23,
+   "fate": {
+    "unspent": 67610675.11,
+    "safetrade": 3619143.26,
+    "otc": 6240687.66,
+    "pearl_trade": 58593.34,
+    "bridge": 606601.61,
+    "pool": 20969.29,
+    "system": 6148.73,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 2038,
+    "partial": 322,
+    "spent_all": 822
+   },
+   "venue": {
+    "safetrade": 1086,
+    "otc": 1116,
+    "both": 1086,
+    "bridge": 1096,
+    "any_venue": 1120,
+    "spent_no_venue": 0,
+    "unspent_only": 2062
+   },
+   "dominant": {
+    "unspent": 2945,
+    "safetrade": 28,
+    "otc": 193,
+    "bridge": 15,
+    "other": 1
+   }
+  },
+  {
+   "bucket": ">100k",
+   "miners": 433,
+   "recv": 142695774.01,
+   "fate": {
+    "unspent": 119406457.04,
+    "safetrade": 5561286.16,
+    "otc": 16918324.68,
+    "pearl_trade": 69114.76,
+    "bridge": 687143.68,
+    "pool": 49321.79,
+    "system": 4126.34,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 145,
+    "partial": 157,
+    "spent_all": 131
+   },
+   "venue": {
+    "safetrade": 149,
+    "otc": 153,
+    "both": 149,
+    "bridge": 151,
+    "any_venue": 155,
+    "spent_no_venue": 0,
+    "unspent_only": 278
+   },
+   "dominant": {
+    "unspent": 395,
+    "safetrade": 2,
+    "otc": 34,
+    "bridge": 2,
+    "other": 0
+   }
+  }
+ ],
+ "by_cohort": [
+  {
+   "week": 0,
+   "week_start": 1777248000,
+   "miners": 6698,
+   "recv": 132592166.31,
+   "fate": {
+    "unspent": 132446103.68,
+    "safetrade": 23803.36,
+    "otc": 120802.61,
+    "pearl_trade": 147.35,
+    "bridge": 1309.74,
+    "pool": 0.09,
+    "system": 0.07,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 6558,
+    "partial": 117,
+    "spent_all": 23
+   },
+   "venue": {
+    "safetrade": 6,
+    "otc": 11,
+    "both": 6,
+    "bridge": 6,
+    "any_venue": 11,
+    "spent_no_venue": 0,
+    "unspent_only": 6687
+   },
+   "dominant": {
+    "unspent": 6692,
+    "safetrade": 1,
+    "otc": 5,
+    "bridge": 0,
+    "other": 0
+   }
+  },
+  {
+   "week": 1,
+   "week_start": 1777852800,
+   "miners": 1097,
+   "recv": 21077513.11,
+   "fate": {
+    "unspent": 16903551.69,
+    "safetrade": 196230.31,
+    "otc": 3932511.7,
+    "pearl_trade": 1173.8,
+    "bridge": 43002.08,
+    "pool": 229.77,
+    "system": 814.72,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 1070,
+    "partial": 8,
+    "spent_all": 19
+   },
+   "venue": {
+    "safetrade": 15,
+    "otc": 19,
+    "both": 15,
+    "bridge": 15,
+    "any_venue": 19,
+    "spent_no_venue": 0,
+    "unspent_only": 1078
+   },
+   "dominant": {
+    "unspent": 1085,
+    "safetrade": 1,
+    "otc": 11,
+    "bridge": 0,
+    "other": 0
+   }
+  },
+  {
+   "week": 2,
+   "week_start": 1778457600,
+   "miners": 2013,
+   "recv": 27319298.4,
+   "fate": {
+    "unspent": 15194607.7,
+    "safetrade": 1655992.06,
+    "otc": 10013084.29,
+    "pearl_trade": 52476.64,
+    "bridge": 357929.5,
+    "pool": 30329.42,
+    "system": 14878.43,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 566,
+    "partial": 442,
+    "spent_all": 1005
+   },
+   "venue": {
+    "safetrade": 1191,
+    "otc": 1252,
+    "both": 1140,
+    "bridge": 1065,
+    "any_venue": 1327,
+    "spent_no_venue": 14,
+    "unspent_only": 672
+   },
+   "dominant": {
+    "unspent": 1157,
+    "safetrade": 189,
+    "otc": 600,
+    "bridge": 42,
+    "other": 25
+   }
+  },
+  {
+   "week": 3,
+   "week_start": 1779062400,
+   "miners": 2958,
+   "recv": 18930926.06,
+   "fate": {
+    "unspent": 10453511.39,
+    "safetrade": 2105352,
+    "otc": 5983932.93,
+    "pearl_trade": 45876.56,
+    "bridge": 324998.33,
+    "pool": 9107.1,
+    "system": 8148.39,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 479,
+    "partial": 529,
+    "spent_all": 1950
+   },
+   "venue": {
+    "safetrade": 2262,
+    "otc": 2229,
+    "both": 2152,
+    "bridge": 2011,
+    "any_venue": 2365,
+    "spent_no_venue": 5,
+    "unspent_only": 588
+   },
+   "dominant": {
+    "unspent": 1387,
+    "safetrade": 410,
+    "otc": 1097,
+    "bridge": 56,
+    "other": 8
+   }
+  },
+  {
+   "week": 4,
+   "week_start": 1779667200,
+   "miners": 14901,
+   "recv": 24360789.98,
+   "fate": {
+    "unspent": 14803595.24,
+    "safetrade": 4781973.63,
+    "otc": 4243960.33,
+    "pearl_trade": 38112.02,
+    "bridge": 477654.07,
+    "pool": 13860.54,
+    "system": 1634.51,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 2646,
+    "partial": 2549,
+    "spent_all": 9706
+   },
+   "venue": {
+    "safetrade": 11422,
+    "otc": 9778,
+    "both": 9526,
+    "bridge": 7929,
+    "any_venue": 11776,
+    "spent_no_venue": 33,
+    "unspent_only": 3092
+   },
+   "dominant": {
+    "unspent": 7837,
+    "safetrade": 4738,
+    "otc": 2132,
+    "bridge": 181,
+    "other": 13
+   }
+  },
+  {
+   "week": 5,
+   "week_start": 1780272000,
+   "miners": 12603,
+   "recv": 26056998.6,
+   "fate": {
+    "unspent": 19127293.11,
+    "safetrade": 3979175.61,
+    "otc": 2682748.41,
+    "pearl_trade": 23362.7,
+    "bridge": 231238.94,
+    "pool": 12783.51,
+    "system": 397.03,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 2848,
+    "partial": 1645,
+    "spent_all": 8110
+   },
+   "venue": {
+    "safetrade": 9412,
+    "otc": 7527,
+    "both": 7402,
+    "bridge": 6164,
+    "any_venue": 9582,
+    "spent_no_venue": 8,
+    "unspent_only": 3013
+   },
+   "dominant": {
+    "unspent": 6818,
+    "safetrade": 4438,
+    "otc": 1297,
+    "bridge": 45,
+    "other": 5
+   }
+  },
+  {
+   "week": 6,
+   "week_start": 1780876800,
+   "miners": 4591,
+   "recv": 6349071.61,
+   "fate": {
+    "unspent": 4441281.76,
+    "safetrade": 934998.89,
+    "otc": 845799.77,
+    "pearl_trade": 1549.28,
+    "bridge": 119741.88,
+    "pool": 5690.8,
+    "system": 9.19,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 987,
+    "partial": 453,
+    "spent_all": 3151
+   },
+   "venue": {
+    "safetrade": 3482,
+    "otc": 3080,
+    "both": 3046,
+    "bridge": 2823,
+    "any_venue": 3531,
+    "spent_no_venue": 6,
+    "unspent_only": 1054
+   },
+   "dominant": {
+    "unspent": 3109,
+    "safetrade": 960,
+    "otc": 506,
+    "bridge": 10,
+    "other": 6
+   }
+  },
+  {
+   "week": 7,
+   "week_start": 1781481600,
+   "miners": 3421,
+   "recv": 4956271.25,
+   "fate": {
+    "unspent": 2778494.13,
+    "safetrade": 1354995.66,
+    "otc": 769648.01,
+    "pearl_trade": 702.74,
+    "bridge": 44652.58,
+    "pool": 7777.61,
+    "system": 0.36,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 580,
+    "partial": 238,
+    "spent_all": 2603
+   },
+   "venue": {
+    "safetrade": 2732,
+    "otc": 2520,
+    "both": 2498,
+    "bridge": 2387,
+    "any_venue": 2763,
+    "spent_no_venue": 1,
+    "unspent_only": 657
+   },
+   "dominant": {
+    "unspent": 1720,
+    "safetrade": 1239,
+    "otc": 446,
+    "bridge": 12,
+    "other": 4
+   }
+  },
+  {
+   "week": 8,
+   "week_start": 1782086400,
+   "miners": 3534,
+   "recv": 5613319.59,
+   "fate": {
+    "unspent": 3558534.6,
+    "safetrade": 1472408.24,
+    "otc": 508576.88,
+    "pearl_trade": 1543.48,
+    "bridge": 42315.75,
+    "pool": 29940.35,
+    "system": 0.66,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 465,
+    "partial": 209,
+    "spent_all": 2860
+   },
+   "venue": {
+    "safetrade": 2991,
+    "otc": 2906,
+    "both": 2890,
+    "bridge": 2858,
+    "any_venue": 3018,
+    "spent_no_venue": 4,
+    "unspent_only": 512
+   },
+   "dominant": {
+    "unspent": 2186,
+    "safetrade": 1219,
+    "otc": 110,
+    "bridge": 10,
+    "other": 9
+   }
+  },
+  {
+   "week": 9,
+   "week_start": 1782691200,
+   "miners": 3255,
+   "recv": 6360785.92,
+   "fate": {
+    "unspent": 5192294.65,
+    "safetrade": 592832.78,
+    "otc": 489634.69,
+    "pearl_trade": 2454.9,
+    "bridge": 58925.25,
+    "pool": 24643.34,
+    "system": 0.28,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 435,
+    "partial": 376,
+    "spent_all": 2444
+   },
+   "venue": {
+    "safetrade": 2680,
+    "otc": 2699,
+    "both": 2679,
+    "bridge": 2699,
+    "any_venue": 2706,
+    "spent_no_venue": 2,
+    "unspent_only": 547
+   },
+   "dominant": {
+    "unspent": 3061,
+    "safetrade": 176,
+    "otc": 5,
+    "bridge": 9,
+    "other": 4
+   }
+  },
+  {
+   "week": 10,
+   "week_start": 1783296000,
+   "miners": 2057,
+   "recv": 2907710.42,
+   "fate": {
+    "unspent": 2612059.38,
+    "safetrade": 118026.6,
+    "otc": 115107.61,
+    "pearl_trade": 948.24,
+    "bridge": 26657.25,
+    "pool": 34909.81,
+    "system": 1.7,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 315,
+    "partial": 158,
+    "spent_all": 1584
+   },
+   "venue": {
+    "safetrade": 1662,
+    "otc": 1675,
+    "both": 1661,
+    "bridge": 1676,
+    "any_venue": 1681,
+    "spent_no_venue": 3,
+    "unspent_only": 373
+   },
+   "dominant": {
+    "unspent": 2024,
+    "safetrade": 12,
+    "otc": 4,
+    "bridge": 7,
+    "other": 10
+   }
+  },
+  {
+   "week": 11,
+   "week_start": 1783900800,
+   "miners": 1825,
+   "recv": 5690043.49,
+   "fate": {
+    "unspent": 5300011.93,
+    "safetrade": 118698.6,
+    "otc": 225138.8,
+    "pearl_trade": 1729.27,
+    "bridge": 33404.29,
+    "pool": 11061.49,
+    "system": 0,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 221,
+    "partial": 71,
+    "spent_all": 1533
+   },
+   "venue": {
+    "safetrade": 1568,
+    "otc": 1572,
+    "both": 1568,
+    "bridge": 1575,
+    "any_venue": 1575,
+    "spent_no_venue": 0,
+    "unspent_only": 250
+   },
+   "dominant": {
+    "unspent": 1810,
+    "safetrade": 5,
+    "otc": 2,
+    "bridge": 4,
+    "other": 4
+   }
+  },
+  {
+   "week": 12,
+   "week_start": 1784505600,
+   "miners": 1457,
+   "recv": 2010127.85,
+   "fate": {
+    "unspent": 1772336.24,
+    "safetrade": 58822.35,
+    "otc": 148930.99,
+    "pearl_trade": 482.33,
+    "bridge": 9963.28,
+    "pool": 19592.79,
+    "system": 0,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 190,
+    "partial": 69,
+    "spent_all": 1198
+   },
+   "venue": {
+    "safetrade": 1205,
+    "otc": 1233,
+    "both": 1205,
+    "bridge": 1211,
+    "any_venue": 1234,
+    "spent_no_venue": 7,
+    "unspent_only": 216
+   },
+   "dominant": {
+    "unspent": 1417,
+    "safetrade": 2,
+    "otc": 24,
+    "bridge": 2,
+    "other": 12
+   }
+  },
+  {
+   "week": 13,
+   "week_start": 1785110400,
+   "miners": 1633,
+   "recv": 2082851.16,
+   "fate": {
+    "unspent": 1837956.39,
+    "safetrade": 96440.21,
+    "otc": 62661.78,
+    "pearl_trade": 615.7,
+    "bridge": 38675.57,
+    "pool": 46501.58,
+    "system": 0,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 215,
+    "partial": 88,
+    "spent_all": 1330
+   },
+   "venue": {
+    "safetrade": 1320,
+    "otc": 1326,
+    "both": 1320,
+    "bridge": 1330,
+    "any_venue": 1332,
+    "spent_no_venue": 46,
+    "unspent_only": 255
+   },
+   "dominant": {
+    "unspent": 1578,
+    "safetrade": 5,
+    "otc": 1,
+    "bridge": 2,
+    "other": 47
+   }
+  },
+  {
+   "week": 14,
+   "week_start": 1785715200,
+   "miners": 1248,
+   "recv": 1890962.5,
+   "fate": {
+    "unspent": 1700854.3,
+    "safetrade": 70308.22,
+    "otc": 58201.1,
+    "pearl_trade": 436.94,
+    "bridge": 40417.14,
+    "pool": 20722.55,
+    "system": 22.17,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 260,
+    "partial": 54,
+    "spent_all": 934
+   },
+   "venue": {
+    "safetrade": 897,
+    "otc": 898,
+    "both": 897,
+    "bridge": 900,
+    "any_venue": 900,
+    "spent_no_venue": 36,
+    "unspent_only": 312
+   },
+   "dominant": {
+    "unspent": 1198,
+    "safetrade": 3,
+    "otc": 10,
+    "bridge": 1,
+    "other": 36
+   }
+  },
+  {
+   "week": 15,
+   "week_start": 1786320000,
+   "miners": 1336,
+   "recv": 2726139.52,
+   "fate": {
+    "unspent": 2179888.27,
+    "safetrade": 252583.81,
+    "otc": 169030.42,
+    "pearl_trade": 1675.68,
+    "bridge": 94800.59,
+    "pool": 28160.44,
+    "system": 0,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 211,
+    "partial": 140,
+    "spent_all": 985
+   },
+   "venue": {
+    "safetrade": 884,
+    "otc": 971,
+    "both": 882,
+    "bridge": 965,
+    "any_venue": 983,
+    "spent_no_venue": 40,
+    "unspent_only": 313
+   },
+   "dominant": {
+    "unspent": 1184,
+    "safetrade": 11,
+    "otc": 18,
+    "bridge": 75,
+    "other": 48
+   }
+  },
+  {
+   "week": 16,
+   "week_start": 1786924800,
+   "miners": 989,
+   "recv": 1024417.08,
+   "fate": {
+    "unspent": 908208.74,
+    "safetrade": 47939.48,
+    "otc": 40974.36,
+    "pearl_trade": 615.09,
+    "bridge": 5216.12,
+    "pool": 21463.2,
+    "system": 0,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 177,
+    "partial": 77,
+    "spent_all": 735
+   },
+   "venue": {
+    "safetrade": 727,
+    "otc": 730,
+    "both": 726,
+    "bridge": 724,
+    "any_venue": 734,
+    "spent_no_venue": 36,
+    "unspent_only": 219
+   },
+   "dominant": {
+    "unspent": 914,
+    "safetrade": 12,
+    "otc": 15,
+    "bridge": 1,
+    "other": 47
+   }
+  },
+  {
+   "week": 17,
+   "week_start": 1787529600,
+   "miners": 1224,
+   "recv": 1881385.73,
+   "fate": {
+    "unspent": 1487916.07,
+    "safetrade": 170819.3,
+    "otc": 113433.24,
+    "pearl_trade": 1567.7,
+    "bridge": 84883.31,
+    "pool": 22765.85,
+    "system": 0,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 237,
+    "partial": 90,
+    "spent_all": 897
+   },
+   "venue": {
+    "safetrade": 885,
+    "otc": 887,
+    "both": 876,
+    "bridge": 877,
+    "any_venue": 899,
+    "spent_no_venue": 61,
+    "unspent_only": 264
+   },
+   "dominant": {
+    "unspent": 1131,
+    "safetrade": 23,
+    "otc": 7,
+    "bridge": 2,
+    "other": 61
+   }
+  },
+  {
+   "week": 18,
+   "week_start": 1788134400,
+   "miners": 1482,
+   "recv": 1227032.05,
+   "fate": {
+    "unspent": 923318.53,
+    "safetrade": 182697.73,
+    "otc": 85751.72,
+    "pearl_trade": 1405.92,
+    "bridge": 16265.71,
+    "pool": 17592.21,
+    "system": 0,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 275,
+    "partial": 103,
+    "spent_all": 1104
+   },
+   "venue": {
+    "safetrade": 1116,
+    "otc": 1131,
+    "both": 1116,
+    "bridge": 1129,
+    "any_venue": 1136,
+    "spent_no_venue": 46,
+    "unspent_only": 300
+   },
+   "dominant": {
+    "unspent": 1315,
+    "safetrade": 95,
+    "otc": 21,
+    "bridge": 4,
+    "other": 47
+   }
+  },
+  {
+   "week": 19,
+   "week_start": 1788739200,
+   "miners": 1436,
+   "recv": 1315559.3,
+   "fate": {
+    "unspent": 690323.88,
+    "safetrade": 438285.8,
+    "otc": 147947.13,
+    "pearl_trade": 144.51,
+    "bridge": 15439.74,
+    "pool": 23418.07,
+    "system": 0,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 357,
+    "partial": 117,
+    "spent_all": 962
+   },
+   "venue": {
+    "safetrade": 944,
+    "otc": 970,
+    "both": 944,
+    "bridge": 974,
+    "any_venue": 978,
+    "spent_no_venue": 49,
+    "unspent_only": 409
+   },
+   "dominant": {
+    "unspent": 812,
+    "safetrade": 553,
+    "otc": 17,
+    "bridge": 5,
+    "other": 49
+   }
+  },
+  {
+   "week": 20,
+   "week_start": 1789344000,
+   "miners": 2621,
+   "recv": 932423.56,
+   "fate": {
+    "unspent": 765372.26,
+    "safetrade": 67314.49,
+    "otc": 59586.06,
+    "pearl_trade": 1.68,
+    "bridge": 16540.26,
+    "pool": 23608.78,
+    "system": 0,
+    "hub": 0,
+    "fee_dust": 0
+   },
+   "status": {
+    "held_all": 859,
+    "partial": 420,
+    "spent_all": 1342
+   },
+   "venue": {
+    "safetrade": 233,
+    "otc": 1142,
+    "both": 233,
+    "bridge": 1198,
+    "any_venue": 1295,
+    "spent_no_venue": 71,
+    "unspent_only": 1255
+   },
+   "dominant": {
+    "unspent": 2395,
+    "safetrade": 116,
+    "otc": 19,
+    "bridge": 20,
+    "other": 71
+   }
+  }
+ ],
+ "by_source": [
+  {
+   "source": "Akoya",
+   "miners": 1096,
+   "recv": 492620,
+   "unspent": 346596,
+   "safetrade": 33048,
+   "otc": 106016,
+   "bridge": 5663,
+   "dom_unspent": 854,
+   "dom_safetrade": 47,
+   "dom_otc": 175,
+   "dom_bridge": 8,
+   "held_all": 117,
+   "partial": 32,
+   "spent_all": 947
+  },
+  {
+   "source": "AlphaPool",
+   "miners": 6833,
+   "recv": 2071940,
+   "unspent": 1072301,
+   "safetrade": 304155,
+   "otc": 484292,
+   "bridge": 209162,
+   "dom_unspent": 4079,
+   "dom_safetrade": 1778,
+   "dom_otc": 870,
+   "dom_bridge": 87,
+   "held_all": 2219,
+   "partial": 760,
+   "spent_all": 3854
+  },
+  {
+   "source": "Baikalmine",
+   "miners": 691,
+   "recv": 178955,
+   "unspent": 82650,
+   "safetrade": 74210,
+   "otc": 19957,
+   "bridge": 2112,
+   "dom_unspent": 321,
+   "dom_safetrade": 349,
+   "dom_otc": 18,
+   "dom_bridge": 3,
+   "held_all": 164,
+   "partial": 30,
+   "spent_all": 497
+  },
+  {
+   "source": "C3Pool",
+   "miners": 22,
+   "recv": 1561,
+   "unspent": 822,
+   "safetrade": 181,
+   "otc": 555,
+   "bridge": 4,
+   "dom_unspent": 12,
+   "dom_safetrade": 8,
+   "dom_otc": 2,
+   "dom_bridge": 0,
+   "held_all": 8,
+   "partial": 0,
+   "spent_all": 14
+  },
+  {
+   "source": "F2Pool",
+   "miners": 68,
+   "recv": 51921,
+   "unspent": 49511,
+   "safetrade": 1114,
+   "otc": 1203,
+   "bridge": 85,
+   "dom_unspent": 67,
+   "dom_safetrade": 0,
+   "dom_otc": 1,
+   "dom_bridge": 0,
+   "held_all": 34,
+   "partial": 3,
+   "spent_all": 31
+  },
+  {
+   "source": "GoldenMiner",
+   "miners": 69,
+   "recv": 52301,
+   "unspent": 42302,
+   "safetrade": 6686,
+   "otc": 2461,
+   "bridge": 852,
+   "dom_unspent": 60,
+   "dom_safetrade": 8,
+   "dom_otc": 0,
+   "dom_bridge": 1,
+   "held_all": 12,
+   "partial": 7,
+   "spent_all": 50
+  },
+  {
+   "source": "Hero Miners",
+   "miners": 5873,
+   "recv": 2139704,
+   "unspent": 1521010,
+   "safetrade": 360004,
+   "otc": 164200,
+   "bridge": 94155,
+   "dom_unspent": 4875,
+   "dom_safetrade": 831,
+   "dom_otc": 84,
+   "dom_bridge": 83,
+   "held_all": 970,
+   "partial": 546,
+   "spent_all": 4357
+  },
+  {
+   "source": "Himpool",
+   "miners": 7,
+   "recv": 294,
+   "unspent": 211,
+   "safetrade": 45,
+   "otc": 37,
+   "bridge": 0,
+   "dom_unspent": 4,
+   "dom_safetrade": 3,
+   "dom_otc": 0,
+   "dom_bridge": 0,
+   "held_all": 2,
+   "partial": 0,
+   "spent_all": 5
+  },
+  {
+   "source": "K1",
+   "miners": 57,
+   "recv": 16762,
+   "unspent": 12223,
+   "safetrade": 4323,
+   "otc": 197,
+   "bridge": 19,
+   "dom_unspent": 48,
+   "dom_safetrade": 8,
+   "dom_otc": 1,
+   "dom_bridge": 0,
+   "held_all": 23,
+   "partial": 1,
+   "spent_all": 33
+  },
+  {
+   "source": "Kryptex",
+   "miners": 6565,
+   "recv": 17880644,
+   "unspent": 14798394,
+   "safetrade": 1894250,
+   "otc": 1010789,
+   "bridge": 94651,
+   "dom_unspent": 5552,
+   "dom_safetrade": 563,
+   "dom_otc": 145,
+   "dom_bridge": 24,
+   "held_all": 1854,
+   "partial": 590,
+   "spent_all": 4121
+  },
+  {
+   "source": "LuckyPool",
+   "miners": 8855,
+   "recv": 4922827,
+   "unspent": 3176986,
+   "safetrade": 1024278,
+   "otc": 486702,
+   "bridge": 40335,
+   "dom_unspent": 5063,
+   "dom_safetrade": 3228,
+   "dom_otc": 360,
+   "dom_bridge": 30,
+   "held_all": 2033,
+   "partial": 955,
+   "spent_all": 5867
+  },
+  {
+   "source": "MinePRL",
+   "miners": 172,
+   "recv": 74693,
+   "unspent": 57931,
+   "safetrade": 986,
+   "otc": 14288,
+   "bridge": 1259,
+   "dom_unspent": 157,
+   "dom_safetrade": 4,
+   "dom_otc": 7,
+   "dom_bridge": 2,
+   "held_all": 135,
+   "partial": 10,
+   "spent_all": 27
+  },
+  {
+   "source": "Pearl Fortune",
+   "miners": 8075,
+   "recv": 12369105,
+   "unspent": 5587524,
+   "safetrade": 2110197,
+   "otc": 4513254,
+   "bridge": 93860,
+   "dom_unspent": 3849,
+   "dom_safetrade": 1362,
+   "dom_otc": 2861,
+   "dom_bridge": 1,
+   "held_all": 39,
+   "partial": 98,
+   "spent_all": 7938
+  },
+  {
+   "source": "PearlHash",
+   "miners": 8848,
+   "recv": 10690489,
+   "unspent": 6999993,
+   "safetrade": 1767566,
+   "otc": 1735280,
+   "bridge": 181714,
+   "dom_unspent": 6048,
+   "dom_safetrade": 1965,
+   "dom_otc": 727,
+   "dom_bridge": 98,
+   "held_all": 2102,
+   "partial": 1014,
+   "spent_all": 5732
+  },
+  {
+   "source": "PearlPoolCloud",
+   "miners": 2,
+   "recv": 1,
+   "unspent": 1,
+   "safetrade": 0,
+   "otc": 0,
+   "bridge": 0,
+   "dom_unspent": 2,
+   "dom_safetrade": 0,
+   "dom_otc": 0,
+   "dom_bridge": 0,
+   "held_all": 2,
+   "partial": 0,
+   "spent_all": 0
+  },
+  {
+   "source": "PearlPow",
+   "miners": 2,
+   "recv": 10,
+   "unspent": 1,
+   "safetrade": 3,
+   "otc": 6,
+   "bridge": 0,
+   "dom_unspent": 0,
+   "dom_safetrade": 1,
+   "dom_otc": 1,
+   "dom_bridge": 0,
+   "held_all": 0,
+   "partial": 0,
+   "spent_all": 2
+  },
+  {
+   "source": "Pearlpool.io",
+   "miners": 7,
+   "recv": 993,
+   "unspent": 853,
+   "safetrade": 112,
+   "otc": 28,
+   "bridge": 0,
+   "dom_unspent": 3,
+   "dom_safetrade": 0,
+   "dom_otc": 4,
+   "dom_bridge": 0,
+   "held_all": 1,
+   "partial": 0,
+   "spent_all": 6
+  },
+  {
+   "source": "Pearlski Pool",
+   "miners": 753,
+   "recv": 1227000,
+   "unspent": 952067,
+   "safetrade": 192846,
+   "otc": 63467,
+   "bridge": 18609,
+   "dom_unspent": 619,
+   "dom_safetrade": 122,
+   "dom_otc": 12,
+   "dom_bridge": 0,
+   "held_all": 16,
+   "partial": 6,
+   "spent_all": 731
+  },
+  {
+   "source": "RabbitMiner",
+   "miners": 76,
+   "recv": 3834,
+   "unspent": 3412,
+   "safetrade": 16,
+   "otc": 127,
+   "bridge": 279,
+   "dom_unspent": 76,
+   "dom_safetrade": 0,
+   "dom_otc": 0,
+   "dom_bridge": 0,
+   "held_all": 2,
+   "partial": 0,
+   "spent_all": 74
+  },
+  {
+   "source": "Suprnova.cc",
+   "miners": 5,
+   "recv": 6513,
+   "unspent": 6321,
+   "safetrade": 152,
+   "otc": 35,
+   "bridge": 5,
+   "dom_unspent": 5,
+   "dom_safetrade": 0,
+   "dom_otc": 0,
+   "dom_bridge": 0,
+   "held_all": 3,
+   "partial": 0,
+   "spent_all": 2
+  },
+  {
+   "source": "TW Pool",
+   "miners": 66,
+   "recv": 36607,
+   "unspent": 13931,
+   "safetrade": 2819,
+   "otc": 16946,
+   "bridge": 2783,
+   "dom_unspent": 22,
+   "dom_safetrade": 10,
+   "dom_otc": 34,
+   "dom_bridge": 0,
+   "held_all": 5,
+   "partial": 0,
+   "spent_all": 61
+  },
+  {
+   "source": "multi-pool",
+   "miners": 14728,
+   "recv": 80712467,
+   "unspent": 47700005,
+   "safetrade": 10785389,
+   "otc": 20975323,
+   "bridge": 1178029,
+   "dom_unspent": 9639,
+   "dom_safetrade": 3919,
+   "dom_otc": 1014,
+   "dom_bridge": 150,
+   "held_all": 1210,
+   "partial": 3781,
+   "spent_all": 9737
+  },
+  {
+   "source": "solo",
+   "miners": 9509,
+   "recv": 164374554,
+   "unspent": 162652469,
+   "safetrade": 157320,
+   "otc": 1399323,
+   "bridge": 160454,
+   "dom_unspent": 9475,
+   "dom_safetrade": 2,
+   "dom_otc": 31,
+   "dom_bridge": 1,
+   "held_all": 9000,
+   "partial": 120,
+   "spent_all": 389
+  }
+ ],
+ "weekly": [
+  {
+   "week": 0,
+   "week_start": 1777248000,
+   "issued_to_miners": 125141265,
+   "first_spend": {
+    "unspent": 18849,
+    "safetrade": 125,
+    "otc": 5389,
+    "bridge": 2,
+    "other": 0
+   }
+  },
+  {
+   "week": 1,
+   "week_start": 1777852800,
+   "issued_to_miners": 19066321,
+   "first_spend": {
+    "unspent": 1081323,
+    "safetrade": 5291,
+    "otc": 288811,
+    "bridge": 2293,
+    "other": 38
+   }
+  },
+  {
+   "week": 2,
+   "week_start": 1778457600,
+   "issued_to_miners": 15201798,
+   "first_spend": {
+    "unspent": 2544034,
+    "safetrade": 97336,
+    "otc": 3322457,
+    "bridge": 36758,
+    "other": 4400
+   }
+  },
+  {
+   "week": 3,
+   "week_start": 1779062400,
+   "issued_to_miners": 12890429,
+   "first_spend": {
+    "unspent": 3622883,
+    "safetrade": 487611,
+    "otc": 5534192,
+    "bridge": 76854,
+    "other": 16091
+   }
+  },
+  {
+   "week": 4,
+   "week_start": 1779667200,
+   "issued_to_miners": 12997487,
+   "first_spend": {
+    "unspent": 2545040,
+    "safetrade": 1541290,
+    "otc": 6084998,
+    "bridge": 348977,
+    "other": 9494
+   }
+  },
+  {
+   "week": 5,
+   "week_start": 1780272000,
+   "issued_to_miners": 10567575,
+   "first_spend": {
+    "unspent": 2139568,
+    "safetrade": 354873,
+    "otc": 5905394,
+    "bridge": 271413,
+    "other": 18880
+   }
+  },
+  {
+   "week": 6,
+   "week_start": 1780876800,
+   "issued_to_miners": 8462929,
+   "first_spend": {
+    "unspent": 4202743,
+    "safetrade": 413750,
+    "otc": 3021725,
+    "bridge": 269819,
+    "other": 544
+   }
+  },
+  {
+   "week": 7,
+   "week_start": 1781481600,
+   "issued_to_miners": 7694775,
+   "first_spend": {
+    "unspent": 2385925,
+    "safetrade": 2707673,
+    "otc": 1896650,
+    "bridge": 79513,
+    "other": 1060
+   }
+  },
+  {
+   "week": 8,
+   "week_start": 1782086400,
+   "issued_to_miners": 7537574,
+   "first_spend": {
+    "unspent": 6933881,
+    "safetrade": 5897751,
+    "otc": 730592,
+    "bridge": 76645,
+    "other": 27104
+   }
+  },
+  {
+   "week": 9,
+   "week_start": 1782691200,
+   "issued_to_miners": 7189329,
+   "first_spend": {
+    "unspent": 3313721,
+    "safetrade": 1924526,
+    "otc": 352249,
+    "bridge": 45500,
+    "other": 33783
+   }
+  },
+  {
+   "week": 10,
+   "week_start": 1783296000,
+   "issued_to_miners": 6545310,
+   "first_spend": {
+    "unspent": 5180926,
+    "safetrade": 66145,
+    "otc": 282678,
+    "bridge": 40515,
+    "other": 68544
+   }
+  },
+  {
+   "week": 11,
+   "week_start": 1783900800,
+   "issued_to_miners": 8909057,
+   "first_spend": {
+    "unspent": 9873201,
+    "safetrade": 150279,
+    "otc": 568125,
+    "bridge": 76546,
+    "other": 19994
+   }
+  },
+  {
+   "week": 12,
+   "week_start": 1784505600,
+   "issued_to_miners": 6273034,
+   "first_spend": {
+    "unspent": 5772908,
+    "safetrade": 30536,
+    "otc": 403268,
+    "bridge": 38880,
+    "other": 14614
+   }
+  },
+  {
+   "week": 13,
+   "week_start": 1785110400,
+   "issued_to_miners": 5125092,
+   "first_spend": {
+    "unspent": 4477206,
+    "safetrade": 23069,
+    "otc": 148287,
+    "bridge": 30793,
+    "other": 44813
+   }
+  },
+  {
+   "week": 14,
+   "week_start": 1785715200,
+   "issued_to_miners": 6297100,
+   "first_spend": {
+    "unspent": 5511957,
+    "safetrade": 17576,
+    "otc": 107967,
+    "bridge": 49446,
+    "other": 13553
+   }
+  },
+  {
+   "week": 15,
+   "week_start": 1786320000,
+   "issued_to_miners": 6120836,
+   "first_spend": {
+    "unspent": 3761965,
+    "safetrade": 42250,
+    "otc": 74560,
+    "bridge": 111775,
+    "other": 17630
+   }
+  },
+  {
+   "week": 16,
+   "week_start": 1786924800,
+   "issued_to_miners": 5670040,
+   "first_spend": {
+    "unspent": 3485350,
+    "safetrade": 80725,
+    "otc": 77305,
+    "bridge": 18028,
+    "other": 20484
+   }
+  },
+  {
+   "week": 17,
+   "week_start": 1787529600,
+   "issued_to_miners": 6250605,
+   "first_spend": {
+    "unspent": 5210203,
+    "safetrade": 110917,
+    "otc": 238341,
+    "bridge": 15573,
+    "other": 27879
+   }
+  },
+  {
+   "week": 18,
+   "week_start": 1788134400,
+   "issued_to_miners": 6490787,
+   "first_spend": {
+    "unspent": 9907670,
+    "safetrade": 717423,
+    "otc": 244036,
+    "bridge": 81448,
+    "other": 4072
+   }
+  },
+  {
+   "week": 19,
+   "week_start": 1788739200,
+   "issued_to_miners": 6141684,
+   "first_spend": {
+    "unspent": 2843839,
+    "safetrade": 2876797,
+    "otc": 906273,
+    "bridge": 165677,
+    "other": 19189
+   }
+  },
+  {
+   "week": 20,
+   "week_start": 1789344000,
+   "issued_to_miners": 6732768,
+   "first_spend": {
+    "unspent": 6116465,
+    "safetrade": 1173757,
+    "otc": 801187,
+    "bridge": 247578,
+    "other": 67900
+   }
+  }
+ ],
+ "generated_at": "2026-09-25T04:50:25Z",
+ "supply_at_tip": 317993962.86102444,
+ "supply_source": "S*t/(t+H), S=2.1e9, H=650226 (whitepaper emission schedule)",
+ "by_issue_week": [
+  {
+   "week": 0,
+   "week_start": 1777248000,
+   "emitted": 125141265,
+   "paid_to_miners": 125141265,
+   "unspent_at_origin": 122900927,
+   "held": 124995431,
+   "safetrade": 23722,
+   "otc": 120820,
+   "bridge": 1292,
+   "other": 0,
+   "price_close_usd": null,
+   "price_source": null
+  },
+  {
+   "week": 1,
+   "week_start": 1777852800,
+   "emitted": 22691249,
+   "paid_to_miners": 19066321,
+   "unspent_at_origin": 13334255,
+   "held": 18152126,
+   "safetrade": 15821,
+   "otc": 878612,
+   "bridge": 19569,
+   "other": 193,
+   "price_close_usd": 0.599,
+   "price_source": "pearl_otc_vwap"
+  },
+  {
+   "week": 2,
+   "week_start": 1778457600,
+   "emitted": 16252188,
+   "paid_to_miners": 15201798,
+   "unspent_at_origin": 5747476,
+   "held": 10558298,
+   "safetrade": 193366,
+   "otc": 4398344,
+   "bridge": 44989,
+   "other": 6800,
+   "price_close_usd": 0.485,
+   "price_source": "pearl_otc_vwap"
+  },
+  {
+   "week": 3,
+   "week_start": 1779062400,
+   "emitted": 13894638,
+   "paid_to_miners": 12890429,
+   "unspent_at_origin": 2582978,
+   "held": 6892833,
+   "safetrade": 778179,
+   "otc": 5093811,
+   "bridge": 110120,
+   "other": 15487,
+   "price_close_usd": 0.467,
+   "price_source": "pearl_otc_vwap"
+  },
+  {
+   "week": 4,
+   "week_start": 1779667200,
+   "emitted": 13883579,
+   "paid_to_miners": 12997487,
+   "unspent_at_origin": 1315826,
+   "held": 4268911,
+   "safetrade": 1559113,
+   "otc": 6776705,
+   "bridge": 380648,
+   "other": 12110,
+   "price_close_usd": 0.792,
+   "price_source": "pearl_otc_vwap"
+  },
+  {
+   "week": 5,
+   "week_start": 1780272000,
+   "emitted": 11155018,
+   "paid_to_miners": 10567575,
+   "unspent_at_origin": 946015,
+   "held": 4022140,
+   "safetrade": 1230909,
+   "otc": 4982799,
+   "bridge": 317181,
+   "other": 14545,
+   "price_close_usd": 0.6,
+   "price_source": "safetrade"
+  },
+  {
+   "week": 6,
+   "week_start": 1780876800,
+   "emitted": 9205833,
+   "paid_to_miners": 8462929,
+   "unspent_at_origin": 755174,
+   "held": 4290726,
+   "safetrade": 1556320,
+   "otc": 2442902,
+   "bridge": 167687,
+   "other": 5294,
+   "price_close_usd": 0.41,
+   "price_source": "safetrade"
+  },
+  {
+   "week": 7,
+   "week_start": 1781481600,
+   "emitted": 8532169,
+   "paid_to_miners": 7694775,
+   "unspent_at_origin": 610247,
+   "held": 2705885,
+   "safetrade": 3228897,
+   "otc": 1669564,
+   "bridge": 82417,
+   "other": 8013,
+   "price_close_usd": 0.569,
+   "price_source": "safetrade"
+  },
+  {
+   "week": 8,
+   "week_start": 1782086400,
+   "emitted": 8389378,
+   "paid_to_miners": 7537574,
+   "unspent_at_origin": 499870,
+   "held": 2734914,
+   "safetrade": 4009111,
+   "otc": 673759,
+   "bridge": 81922,
+   "other": 37869,
+   "price_close_usd": 0.549,
+   "price_source": "safetrade"
+  },
+  {
+   "week": 9,
+   "week_start": 1782691200,
+   "emitted": 8080620,
+   "paid_to_miners": 7189329,
+   "unspent_at_origin": 492273,
+   "held": 5703885,
+   "safetrade": 971574,
+   "otc": 424440,
+   "bridge": 59004,
+   "other": 30427,
+   "price_close_usd": 0.43,
+   "price_source": "safetrade"
+  },
+  {
+   "week": 10,
+   "week_start": 1783296000,
+   "emitted": 7415448,
+   "paid_to_miners": 6545310,
+   "unspent_at_origin": 518897,
+   "held": 6029532,
+   "safetrade": 117337,
+   "otc": 290237,
+   "bridge": 49606,
+   "other": 58599,
+   "price_close_usd": 0.4,
+   "price_source": "safetrade"
+  },
+  {
+   "week": 11,
+   "week_start": 1783900800,
+   "emitted": 9638026,
+   "paid_to_miners": 8909057,
+   "unspent_at_origin": 465471,
+   "held": 8237497,
+   "safetrade": 129250,
+   "otc": 466151,
+   "bridge": 64789,
+   "other": 11371,
+   "price_close_usd": 0.31,
+   "price_source": "safetrade"
+  },
+  {
+   "week": 12,
+   "week_start": 1784505600,
+   "emitted": 7125338,
+   "paid_to_miners": 6273034,
+   "unspent_at_origin": 365616,
+   "held": 5817911,
+   "safetrade": 53183,
+   "otc": 340065,
+   "bridge": 39532,
+   "other": 22344,
+   "price_close_usd": 0.32,
+   "price_source": "safetrade"
+  },
+  {
+   "week": 13,
+   "week_start": 1785110400,
+   "emitted": 5902861,
+   "paid_to_miners": 5125092,
+   "unspent_at_origin": 425957,
+   "held": 4816229,
+   "safetrade": 67423,
+   "otc": 154993,
+   "bridge": 38980,
+   "other": 47468,
+   "price_close_usd": 0.26,
+   "price_source": "safetrade"
+  },
+  {
+   "week": 14,
+   "week_start": 1785715200,
+   "emitted": 7161899,
+   "paid_to_miners": 6297100,
+   "unspent_at_origin": 450001,
+   "held": 6016981,
+   "safetrade": 64629,
+   "otc": 137907,
+   "bridge": 56852,
+   "other": 20731,
+   "price_close_usd": 0.27,
+   "price_source": "safetrade"
+  },
+  {
+   "week": 15,
+   "week_start": 1786320000,
+   "emitted": 6970509,
+   "paid_to_miners": 6120836,
+   "unspent_at_origin": 285073,
+   "held": 5641429,
+   "safetrade": 159166,
+   "otc": 169889,
+   "bridge": 122205,
+   "other": 28146,
+   "price_close_usd": 0.27,
+   "price_source": "safetrade"
+  },
+  {
+   "week": 16,
+   "week_start": 1786924800,
+   "emitted": 6552072,
+   "paid_to_miners": 5670040,
+   "unspent_at_origin": 295503,
+   "held": 5274480,
+   "safetrade": 192760,
+   "otc": 159433,
+   "bridge": 21916,
+   "other": 21451,
+   "price_close_usd": 0.27,
+   "price_source": "safetrade"
+  },
+  {
+   "week": 17,
+   "week_start": 1787529600,
+   "emitted": 7433228,
+   "paid_to_miners": 6250605,
+   "unspent_at_origin": 350942,
+   "held": 5728085,
+   "safetrade": 272116,
+   "otc": 200589,
+   "bridge": 25307,
+   "other": 24507,
+   "price_close_usd": 0.27,
+   "price_source": "safetrade"
+  },
+  {
+   "week": 18,
+   "week_start": 1788134400,
+   "emitted": 7769839,
+   "paid_to_miners": 6490787,
+   "unspent_at_origin": 405330,
+   "held": 5428245,
+   "safetrade": 662964,
+   "otc": 288525,
+   "bridge": 93459,
+   "other": 17592,
+   "price_close_usd": 0.37,
+   "price_source": "safetrade"
+  },
+  {
+   "week": 19,
+   "week_start": 1788739200,
+   "emitted": 7342115,
+   "paid_to_miners": 6141684,
+   "unspent_at_origin": 438094,
+   "held": 2747249,
+   "safetrade": 2534559,
+   "otc": 727593,
+   "bridge": 108864,
+   "other": 23418,
+   "price_close_usd": 0.517,
+   "price_source": "coinmarketcap"
+  },
+  {
+   "week": 20,
+   "week_start": 1789344000,
+   "emitted": 7463837,
+   "paid_to_miners": 6732768,
+   "unspent_at_origin": 961932,
+   "held": 5014726,
+   "safetrade": 899301,
+   "otc": 597347,
+   "bridge": 197693,
+   "other": 23701,
+   "price_close_usd": 0.801,
+   "price_source": "coinmarketcap"
+  }
+ ],
+ "bridge_flow_prl_side": [
+  {
+   "week": 2,
+   "week_start": 1778457600,
+   "in": 11,
+   "out": 4
+  },
+  {
+   "week": 3,
+   "week_start": 1779062400,
+   "in": 208575,
+   "out": 30614
+  },
+  {
+   "week": 4,
+   "week_start": 1779667200,
+   "in": 536396,
+   "out": 263804
+  },
+  {
+   "week": 5,
+   "week_start": 1780272000,
+   "in": 316914,
+   "out": 210816
+  },
+  {
+   "week": 6,
+   "week_start": 1780876800,
+   "in": 355649,
+   "out": 106822
+  },
+  {
+   "week": 7,
+   "week_start": 1781481600,
+   "in": 95882,
+   "out": 123150
+  },
+  {
+   "week": 8,
+   "week_start": 1782086400,
+   "in": 97807,
+   "out": 65895
+  },
+  {
+   "week": 9,
+   "week_start": 1782691200,
+   "in": 84421,
+   "out": 32044
+  },
+  {
+   "week": 10,
+   "week_start": 1783296000,
+   "in": 35035,
+   "out": 18543
+  },
+  {
+   "week": 11,
+   "week_start": 1783900800,
+   "in": 103330,
+   "out": 23880
+  },
+  {
+   "week": 12,
+   "week_start": 1784505600,
+   "in": 98333,
+   "out": 32167
+  },
+  {
+   "week": 13,
+   "week_start": 1785110400,
+   "in": 31928,
+   "out": 67326
+  },
+  {
+   "week": 14,
+   "week_start": 1785715200,
+   "in": 54887,
+   "out": 111245
+  },
+  {
+   "week": 15,
+   "week_start": 1786320000,
+   "in": 119133,
+   "out": 126315
+  },
+  {
+   "week": 16,
+   "week_start": 1786924800,
+   "in": 63574,
+   "out": 101529
+  },
+  {
+   "week": 17,
+   "week_start": 1787529600,
+   "in": 11168,
+   "out": 5949
+  },
+  {
+   "week": 18,
+   "week_start": 1788134400,
+   "in": 44995,
+   "out": 61058
+  },
+  {
+   "week": 19,
+   "week_start": 1788739200,
+   "in": 232538,
+   "out": 90109
+  },
+  {
+   "week": 20,
+   "week_start": 1789344000,
+   "in": 409596,
+   "out": 89156
+  }
+ ],
+ "wprl_supply_daily": [
+  {
+   "date": "2026-05-19",
+   "minted": 82,
+   "burned": 46,
+   "supply": 36,
+   "price_usd": 0.318
+  },
+  {
+   "date": "2026-05-20",
+   "minted": 11108,
+   "burned": 0,
+   "supply": 11144,
+   "price_usd": 0.407
+  },
+  {
+   "date": "2026-05-21",
+   "minted": 44346,
+   "burned": 354,
+   "supply": 55136,
+   "price_usd": 0.597
+  },
+  {
+   "date": "2026-05-22",
+   "minted": 70762,
+   "burned": 2056,
+   "supply": 123842,
+   "price_usd": 0.592
+  },
+  {
+   "date": "2026-05-23",
+   "minted": 49996,
+   "burned": 13358,
+   "supply": 160479,
+   "price_usd": 0.463
+  },
+  {
+   "date": "2026-05-24",
+   "minted": 32376,
+   "burned": 14706,
+   "supply": 178150,
+   "price_usd": 0.467
+  },
+  {
+   "date": "2026-05-25",
+   "minted": 49927,
+   "burned": 62059,
+   "supply": 166019,
+   "price_usd": 0.519
+  },
+  {
+   "date": "2026-05-26",
+   "minted": 34032,
+   "burned": 51531,
+   "supply": 148520,
+   "price_usd": 0.655
+  },
+  {
+   "date": "2026-05-27",
+   "minted": 29611,
+   "burned": 28819,
+   "supply": 149312,
+   "price_usd": 0.811
+  },
+  {
+   "date": "2026-05-28",
+   "minted": 100000,
+   "burned": 52509,
+   "supply": 196802,
+   "price_usd": 1.316
+  },
+  {
+   "date": "2026-05-29",
+   "minted": 182420,
+   "burned": 25898,
+   "supply": 353325,
+   "price_usd": 1.6
+  },
+  {
+   "date": "2026-05-30",
+   "minted": 35775,
+   "burned": 277,
+   "supply": 388823,
+   "price_usd": 1.165
+  },
+  {
+   "date": "2026-05-31",
+   "minted": 98581,
+   "burned": 38342,
+   "supply": 449062,
+   "price_usd": 0.792
+  },
+  {
+   "date": "2026-06-01",
+   "minted": 87958,
+   "burned": 65206,
+   "supply": 471814,
+   "price_usd": 0.857
+  },
+  {
+   "date": "2026-06-02",
+   "minted": 43601,
+   "burned": 41860,
+   "supply": 473555,
+   "price_usd": 0.793
+  },
+  {
+   "date": "2026-06-03",
+   "minted": 52841,
+   "burned": 41539,
+   "supply": 484857,
+   "price_usd": 0.797
+  },
+  {
+   "date": "2026-06-04",
+   "minted": 16014,
+   "burned": 16662,
+   "supply": 484209,
+   "price_usd": 0.812
+  },
+  {
+   "date": "2026-06-05",
+   "minted": 32101,
+   "burned": 12265,
+   "supply": 504046,
+   "price_usd": 0.795
+  },
+  {
+   "date": "2026-06-06",
+   "minted": 48685,
+   "burned": 15507,
+   "supply": 537225,
+   "price_usd": 0.61
+  },
+  {
+   "date": "2026-06-07",
+   "minted": 32523,
+   "burned": 17777,
+   "supply": 551970,
+   "price_usd": 0.6
+  },
+  {
+   "date": "2026-06-08",
+   "minted": 199399,
+   "burned": 32892,
+   "supply": 718477,
+   "price_usd": 0.56
+  },
+  {
+   "date": "2026-06-09",
+   "minted": 72002,
+   "burned": 30564,
+   "supply": 759915,
+   "price_usd": 0.57
+  },
+  {
+   "date": "2026-06-10",
+   "minted": 20178,
+   "burned": 19194,
+   "supply": 760899,
+   "price_usd": 0.529
+  },
+  {
+   "date": "2026-06-11",
+   "minted": 6292,
+   "burned": 7600,
+   "supply": 759591,
+   "price_usd": 0.52
+  },
+  {
+   "date": "2026-06-12",
+   "minted": 8726,
+   "burned": 9773,
+   "supply": 758544,
+   "price_usd": 0.49
+  },
+  {
+   "date": "2026-06-13",
+   "minted": 41011,
+   "burned": 1153,
+   "supply": 798401,
+   "price_usd": 0.39
+  },
+  {
+   "date": "2026-06-14",
+   "minted": 12095,
+   "burned": 6596,
+   "supply": 803900,
+   "price_usd": 0.41
+  },
+  {
+   "date": "2026-06-15",
+   "minted": 8794,
+   "burned": 5050,
+   "supply": 807645,
+   "price_usd": 0.42
+  },
+  {
+   "date": "2026-06-16",
+   "minted": 16355,
+   "burned": 4741,
+   "supply": 819258,
+   "price_usd": 0.54
+  },
+  {
+   "date": "2026-06-17",
+   "minted": 11051,
+   "burned": 35784,
+   "supply": 794525,
+   "price_usd": 0.629
+  },
+  {
+   "date": "2026-06-18",
+   "minted": 22848,
+   "burned": 68894,
+   "supply": 748478,
+   "price_usd": 0.629
+  },
+  {
+   "date": "2026-06-19",
+   "minted": 16973,
+   "burned": 4315,
+   "supply": 761136,
+   "price_usd": 0.65
+  },
+  {
+   "date": "2026-06-20",
+   "minted": 16723,
+   "burned": 2625,
+   "supply": 775235,
+   "price_usd": 0.599
+  },
+  {
+   "date": "2026-06-21",
+   "minted": 17896,
+   "burned": 891,
+   "supply": 792239,
+   "price_usd": 0.569
+  },
+  {
+   "date": "2026-06-22",
+   "minted": 7895,
+   "burned": 5913,
+   "supply": 794220,
+   "price_usd": 0.609
+  },
+  {
+   "date": "2026-06-23",
+   "minted": 17705,
+   "burned": 6792,
+   "supply": 805134,
+   "price_usd": null
+  },
+  {
+   "date": "2026-06-24",
+   "minted": 36194,
+   "burned": 34849,
+   "supply": 806478,
+   "price_usd": null
+  },
+  {
+   "date": "2026-06-25",
+   "minted": 11030,
+   "burned": 12454,
+   "supply": 805054,
+   "price_usd": 0.65
+  },
+  {
+   "date": "2026-06-26",
+   "minted": 27702,
+   "burned": 1692,
+   "supply": 831065,
+   "price_usd": 0.609
+  },
+  {
+   "date": "2026-06-27",
+   "minted": 10712,
+   "burned": 4045,
+   "supply": 837732,
+   "price_usd": 0.579
+  },
+  {
+   "date": "2026-06-28",
+   "minted": 8987,
+   "burned": 50,
+   "supply": 846668,
+   "price_usd": 0.549
+  },
+  {
+   "date": "2026-06-29",
+   "minted": 11847,
+   "burned": 18902,
+   "supply": 839614,
+   "price_usd": 0.559
+  },
+  {
+   "date": "2026-06-30",
+   "minted": 22560,
+   "burned": 1937,
+   "supply": 860237,
+   "price_usd": 0.509
+  },
+  {
+   "date": "2026-07-01",
+   "minted": 13342,
+   "burned": 1544,
+   "supply": 872035,
+   "price_usd": 0.42
+  },
+  {
+   "date": "2026-07-02",
+   "minted": 15168,
+   "burned": 5479,
+   "supply": 881724,
+   "price_usd": 0.43
+  },
+  {
+   "date": "2026-07-03",
+   "minted": 19194,
+   "burned": 3026,
+   "supply": 897892,
+   "price_usd": 0.41
+  },
+  {
+   "date": "2026-07-04",
+   "minted": 2196,
+   "burned": 0,
+   "supply": 900088,
+   "price_usd": 0.39
+  },
+  {
+   "date": "2026-07-05",
+   "minted": 5712,
+   "burned": 1157,
+   "supply": 904643,
+   "price_usd": 0.43
+  },
+  {
+   "date": "2026-07-06",
+   "minted": 3370,
+   "burned": 5498,
+   "supply": 902514,
+   "price_usd": 0.47
+  },
+  {
+   "date": "2026-07-07",
+   "minted": 6435,
+   "burned": 5254,
+   "supply": 903695,
+   "price_usd": 0.48
+  },
+  {
+   "date": "2026-07-08",
+   "minted": 522,
+   "burned": 7191,
+   "supply": 897025,
+   "price_usd": 0.47
+  },
+  {
+   "date": "2026-07-09",
+   "minted": 5044,
+   "burned": 0,
+   "supply": 902070,
+   "price_usd": 0.45
+  },
+  {
+   "date": "2026-07-10",
+   "minted": 11099,
+   "burned": 0,
+   "supply": 913169,
+   "price_usd": 0.41
+  },
+  {
+   "date": "2026-07-11",
+   "minted": 5272,
+   "burned": 300,
+   "supply": 918141,
+   "price_usd": 0.4
+  },
+  {
+   "date": "2026-07-12",
+   "minted": 4649,
+   "burned": 300,
+   "supply": 922490,
+   "price_usd": 0.4
+  },
+  {
+   "date": "2026-07-13",
+   "minted": 7730,
+   "burned": 1347,
+   "supply": 928873,
+   "price_usd": 0.4
+  },
+  {
+   "date": "2026-07-14",
+   "minted": 730,
+   "burned": 3054,
+   "supply": 926549,
+   "price_usd": 0.4
+  },
+  {
+   "date": "2026-07-15",
+   "minted": 10390,
+   "burned": 2800,
+   "supply": 934139,
+   "price_usd": 0.37
+  },
+  {
+   "date": "2026-07-16",
+   "minted": 12393,
+   "burned": 5628,
+   "supply": 940904,
+   "price_usd": 0.35
+  },
+  {
+   "date": "2026-07-17",
+   "minted": 14516,
+   "burned": 2876,
+   "supply": 952543,
+   "price_usd": 0.34
+  },
+  {
+   "date": "2026-07-18",
+   "minted": 2096,
+   "burned": 3496,
+   "supply": 951143,
+   "price_usd": 0.32
+  },
+  {
+   "date": "2026-07-19",
+   "minted": 2678,
+   "burned": 4679,
+   "supply": 949142,
+   "price_usd": 0.31
+  },
+  {
+   "date": "2026-07-20",
+   "minted": 15493,
+   "burned": 7724,
+   "supply": 956911,
+   "price_usd": 0.29
+  },
+  {
+   "date": "2026-07-21",
+   "minted": 7724,
+   "burned": 3675,
+   "supply": 960960,
+   "price_usd": 0.31
+  },
+  {
+   "date": "2026-07-22",
+   "minted": 16042,
+   "burned": 0,
+   "supply": 977003,
+   "price_usd": 0.25
+  },
+  {
+   "date": "2026-07-23",
+   "minted": 37869,
+   "burned": 5482,
+   "supply": 1009390,
+   "price_usd": 0.31
+  },
+  {
+   "date": "2026-07-24",
+   "minted": 18812,
+   "burned": 11002,
+   "supply": 1017200,
+   "price_usd": 0.32
+  },
+  {
+   "date": "2026-07-25",
+   "minted": 1759,
+   "burned": 806,
+   "supply": 1018153,
+   "price_usd": 0.268
+  },
+  {
+   "date": "2026-07-26",
+   "minted": 0,
+   "burned": 3478,
+   "supply": 1014675,
+   "price_usd": 0.32
+  },
+  {
+   "date": "2026-07-27",
+   "minted": 1941,
+   "burned": 5559,
+   "supply": 1011057,
+   "price_usd": 0.33
+  },
+  {
+   "date": "2026-07-28",
+   "minted": 6078,
+   "burned": 53600,
+   "supply": 963534,
+   "price_usd": 0.32
+  },
+  {
+   "date": "2026-07-29",
+   "minted": 6199,
+   "burned": 3807,
+   "supply": 965926,
+   "price_usd": 0.33
+  },
+  {
+   "date": "2026-07-30",
+   "minted": 3881,
+   "burned": 225,
+   "supply": 969582,
+   "price_usd": 0.31
+  },
+  {
+   "date": "2026-07-31",
+   "minted": 521,
+   "burned": 0,
+   "supply": 970103,
+   "price_usd": 0.32
+  },
+  {
+   "date": "2026-08-01",
+   "minted": 4348,
+   "burned": 2302,
+   "supply": 972149,
+   "price_usd": 0.28
+  },
+  {
+   "date": "2026-08-02",
+   "minted": 8776,
+   "burned": 1832,
+   "supply": 979093,
+   "price_usd": 0.26
+  },
+  {
+   "date": "2026-08-03",
+   "minted": 3241,
+   "burned": 2441,
+   "supply": 979893,
+   "price_usd": 0.29
+  },
+  {
+   "date": "2026-08-04",
+   "minted": 5448,
+   "burned": 0,
+   "supply": 985341,
+   "price_usd": 0.26
+  },
+  {
+   "date": "2026-08-05",
+   "minted": 2985,
+   "burned": 4587,
+   "supply": 983739,
+   "price_usd": 0.27
+  },
+  {
+   "date": "2026-08-06",
+   "minted": 3042,
+   "burned": 13080,
+   "supply": 973702,
+   "price_usd": 0.28
+  },
+  {
+   "date": "2026-08-07",
+   "minted": 32300,
+   "burned": 86999,
+   "supply": 919002,
+   "price_usd": 0.26
+  },
+  {
+   "date": "2026-08-08",
+   "minted": 2985,
+   "burned": 3092,
+   "supply": 918895,
+   "price_usd": 0.26
+  },
+  {
+   "date": "2026-08-09",
+   "minted": 4582,
+   "burned": 1045,
+   "supply": 922432,
+   "price_usd": 0.27
+  },
+  {
+   "date": "2026-08-10",
+   "minted": 3181,
+   "burned": 103,
+   "supply": 925509,
+   "price_usd": 0.27
+  },
+  {
+   "date": "2026-08-11",
+   "minted": 67690,
+   "burned": 46257,
+   "supply": 946942,
+   "price_usd": 0.27
+  },
+  {
+   "date": "2026-08-12",
+   "minted": 33702,
+   "burned": 46142,
+   "supply": 934501,
+   "price_usd": 0.26
+  },
+  {
+   "date": "2026-08-13",
+   "minted": 9567,
+   "burned": 28386,
+   "supply": 915683,
+   "price_usd": 0.26
+  },
+  {
+   "date": "2026-08-14",
+   "minted": 4339,
+   "burned": 2280,
+   "supply": 917742,
+   "price_usd": 0.27
+  },
+  {
+   "date": "2026-08-15",
+   "minted": 0,
+   "burned": 2085,
+   "supply": 915657,
+   "price_usd": 0.27
+  },
+  {
+   "date": "2026-08-16",
+   "minted": 0,
+   "burned": 1062,
+   "supply": 914596,
+   "price_usd": 0.27
+  },
+  {
+   "date": "2026-08-17",
+   "minted": 0,
+   "burned": 3499,
+   "supply": 911097,
+   "price_usd": 0.27
+  },
+  {
+   "date": "2026-08-18",
+   "minted": 995,
+   "burned": 6496,
+   "supply": 905595,
+   "price_usd": 0.26
+  },
+  {
+   "date": "2026-08-19",
+   "minted": 230,
+   "burned": 0,
+   "supply": 905825,
+   "price_usd": 0.27
+  },
+  {
+   "date": "2026-08-20",
+   "minted": 49591,
+   "burned": 68530,
+   "supply": 886886,
+   "price_usd": 0.27
+  },
+  {
+   "date": "2026-08-21",
+   "minted": 0,
+   "burned": 2215,
+   "supply": 884671,
+   "price_usd": 0.28
+  },
+  {
+   "date": "2026-08-22",
+   "minted": 11319,
+   "burned": 19489,
+   "supply": 876501,
+   "price_usd": 0.29
+  },
+  {
+   "date": "2026-08-23",
+   "minted": 1091,
+   "burned": 1300,
+   "supply": 876292,
+   "price_usd": 0.27
+  },
+  {
+   "date": "2026-08-24",
+   "minted": 3620,
+   "burned": 1347,
+   "supply": 878565,
+   "price_usd": 0.27
+  },
+  {
+   "date": "2026-08-25",
+   "minted": 992,
+   "burned": 0,
+   "supply": 879557,
+   "price_usd": 0.29
+  },
+  {
+   "date": "2026-08-26",
+   "minted": 368,
+   "burned": 1401,
+   "supply": 878524,
+   "price_usd": 0.27
+  },
+  {
+   "date": "2026-08-27",
+   "minted": 2738,
+   "burned": 1681,
+   "supply": 879581,
+   "price_usd": 0.3
+  },
+  {
+   "date": "2026-08-28",
+   "minted": 723,
+   "burned": 1520,
+   "supply": 878784,
+   "price_usd": 0.29
+  },
+  {
+   "date": "2026-08-30",
+   "minted": 2666,
+   "burned": 0,
+   "supply": 881450,
+   "price_usd": 0.27
+  },
+  {
+   "date": "2026-08-31",
+   "minted": 6766,
+   "burned": 7844,
+   "supply": 880372,
+   "price_usd": 0.3
+  },
+  {
+   "date": "2026-09-01",
+   "minted": 6173,
+   "burned": 5896,
+   "supply": 880649,
+   "price_usd": 0.32
+  },
+  {
+   "date": "2026-09-02",
+   "minted": 10945,
+   "burned": 6826,
+   "supply": 884768,
+   "price_usd": 0.33
+  },
+  {
+   "date": "2026-09-03",
+   "minted": 1591,
+   "burned": 13634,
+   "supply": 872725,
+   "price_usd": 0.33
+  },
+  {
+   "date": "2026-09-04",
+   "minted": 14516,
+   "burned": 22144,
+   "supply": 865097,
+   "price_usd": 0.36
+  },
+  {
+   "date": "2026-09-05",
+   "minted": 2610,
+   "burned": 4714,
+   "supply": 862993,
+   "price_usd": 0.36
+  },
+  {
+   "date": "2026-09-06",
+   "minted": 2156,
+   "burned": 0,
+   "supply": 865149,
+   "price_usd": 0.37
+  },
+  {
+   "date": "2026-09-07",
+   "minted": 4236,
+   "burned": 6866,
+   "supply": 862518,
+   "price_usd": 0.36
+  },
+  {
+   "date": "2026-09-08",
+   "minted": 9011,
+   "burned": 1550,
+   "supply": 869979,
+   "price_usd": 0.38
+  },
+  {
+   "date": "2026-09-09",
+   "minted": 15273,
+   "burned": 8570,
+   "supply": 876682,
+   "price_usd": 0.42
+  },
+  {
+   "date": "2026-09-10",
+   "minted": 33214,
+   "burned": 14062,
+   "supply": 895834,
+   "price_usd": 0.47
+  },
+  {
+   "date": "2026-09-11",
+   "minted": 59575,
+   "burned": 15479,
+   "supply": 939930,
+   "price_usd": 0.63
+  },
+  {
+   "date": "2026-09-12",
+   "minted": 78683,
+   "burned": 23643,
+   "supply": 994970,
+   "price_usd": 0.59
+  },
+  {
+   "date": "2026-09-13",
+   "minted": 31327,
+   "burned": 19939,
+   "supply": 1006358,
+   "price_usd": 0.517
+  },
+  {
+   "date": "2026-09-14",
+   "minted": 25268,
+   "burned": 2346,
+   "supply": 1029280,
+   "price_usd": 0.561
+  },
+  {
+   "date": "2026-09-15",
+   "minted": 52478,
+   "burned": 12926,
+   "supply": 1068831,
+   "price_usd": 0.56
+  },
+  {
+   "date": "2026-09-16",
+   "minted": 20627,
+   "burned": 14856,
+   "supply": 1074602,
+   "price_usd": 0.621
+  },
+  {
+   "date": "2026-09-17",
+   "minted": 59513,
+   "burned": 0,
+   "supply": 1134115,
+   "price_usd": 0.749
+  },
+  {
+   "date": "2026-09-18",
+   "minted": 148991,
+   "burned": 4960,
+   "supply": 1278146,
+   "price_usd": 1.109
+  },
+  {
+   "date": "2026-09-19",
+   "minted": 89798,
+   "burned": 25427,
+   "supply": 1342518,
+   "price_usd": 1.09
+  },
+  {
+   "date": "2026-09-20",
+   "minted": 21019,
+   "burned": 38920,
+   "supply": 1324616,
+   "price_usd": 0.801
+  },
+  {
+   "date": "2026-09-21",
+   "minted": 22842,
+   "burned": 31842,
+   "supply": 1315616,
+   "price_usd": 0.969
+  },
+  {
+   "date": "2026-09-22",
+   "minted": 142862,
+   "burned": 15970,
+   "supply": 1442508,
+   "price_usd": 1.443
+  },
+  {
+   "date": "2026-09-23",
+   "minted": 157936,
+   "burned": 37320,
+   "supply": 1563124,
+   "price_usd": 1.415
+  },
+  {
+   "date": "2026-09-24",
+   "minted": 110085,
+   "burned": 12705,
+   "supply": 1660505,
+   "price_usd": 1.292
+  },
+  {
+   "date": "2026-09-25",
+   "minted": 43660,
+   "burned": 21322,
+   "supply": 1682843,
+   "price_usd": 1.213
+  }
+ ],
+ "wprl": {
+  "contract": "0x07696DcaB55E62cfef953666b29Fe1970518cB00",
+  "decimals": 8,
+  "total_supply_now": 1682842.56,
+  "holders": 1033,
+  "source": "Blockscout ERC-20 Transfer events from/to 0x0 (mints/burns), reconciled to totalSupply()",
+  "first_mint": "2026-05-19"
+ },
+ "price": {
+  "source": "api.prlscan.com/v1/market/prl/history (Pearl OTC VWAP \u2192 SafeTrade close \u2192 CoinMarketCap)",
+  "weekly_close": {
+   "1": [
+    0.599,
+    "pearl_otc_vwap",
+    "2026-05-10"
+   ],
+   "2": [
+    0.485,
+    "pearl_otc_vwap",
+    "2026-05-17"
+   ],
+   "3": [
+    0.467,
+    "pearl_otc_vwap",
+    "2026-05-24"
+   ],
+   "4": [
+    0.792,
+    "pearl_otc_vwap",
+    "2026-05-31"
+   ],
+   "5": [
+    0.6,
+    "safetrade",
+    "2026-06-07"
+   ],
+   "6": [
+    0.41,
+    "safetrade",
+    "2026-06-14"
+   ],
+   "7": [
+    0.569,
+    "safetrade",
+    "2026-06-21"
+   ],
+   "8": [
+    0.549,
+    "safetrade",
+    "2026-06-28"
+   ],
+   "9": [
+    0.43,
+    "safetrade",
+    "2026-07-05"
+   ],
+   "10": [
+    0.4,
+    "safetrade",
+    "2026-07-12"
+   ],
+   "11": [
+    0.31,
+    "safetrade",
+    "2026-07-19"
+   ],
+   "12": [
+    0.32,
+    "safetrade",
+    "2026-07-26"
+   ],
+   "13": [
+    0.26,
+    "safetrade",
+    "2026-08-02"
+   ],
+   "14": [
+    0.27,
+    "safetrade",
+    "2026-08-09"
+   ],
+   "15": [
+    0.27,
+    "safetrade",
+    "2026-08-16"
+   ],
+   "16": [
+    0.27,
+    "safetrade",
+    "2026-08-23"
+   ],
+   "17": [
+    0.27,
+    "safetrade",
+    "2026-08-30"
+   ],
+   "18": [
+    0.37,
+    "safetrade",
+    "2026-09-06"
+   ],
+   "19": [
+    0.517,
+    "coinmarketcap",
+    "2026-09-13"
+   ],
+   "20": [
+    0.801,
+    "coinmarketcap",
+    "2026-09-20"
+   ],
+   "21": [
+    1.213,
+    "coinmarketcap",
+    "2026-09-25"
+   ]
+  }
+ },
+ "launch_week": {
+  "week_start": 1777248000,
+  "blocks": 41203,
+  "blocks_day1": 13934,
+  "prl": 125141265.41,
+  "share_of_issuance_at_tip": 0.39353346297549535,
+  "addresses": 6698,
+  "all_solo_coinbase": true,
+  "labelled_recipients": 0,
+  "top1_share": 0.0308,
+  "top10_share": 0.1047,
+  "top100_share": 0.3076,
+  "addresses_for_50pct": 200,
+  "addresses_for_90pct": 2904,
+  "addresses_one_block": 3385,
+  "addresses_100plus_blocks": 14,
+  "top": [
+   [
+    "prl1pqrw4pw0y0",
+    3859240,
+    1295
+   ],
+   [
+    "prl1pagjpj42yr",
+    3312224,
+    1124
+   ],
+   [
+    "prl1pp634nelpt",
+    2421069,
+    820
+   ]
+  ],
+  "unspent_share": 0.999,
+  "daily": [
+   {
+    "day": 0,
+    "prl": 44057757,
+    "blocks": 13934,
+    "addresses": 570
+   },
+   {
+    "day": 1,
+    "prl": 25786548,
+    "blocks": 8436,
+    "addresses": 2206
+   },
+   {
+    "day": 2,
+    "prl": 19144486,
+    "blocks": 6403,
+    "addresses": 2438
+   },
+   {
+    "day": 3,
+    "prl": 16857816,
+    "blocks": 5740,
+    "addresses": 1462
+   },
+   {
+    "day": 4,
+    "prl": 7312042,
+    "blocks": 2520,
+    "addresses": 578
+   },
+   {
+    "day": 5,
+    "prl": 6899815,
+    "blocks": 2395,
+    "addresses": 718
+   },
+   {
+    "day": 6,
+    "prl": 5082801,
+    "blocks": 1775,
+    "addresses": 547
+   }
+  ],
+  "note": "Launch week (Apr 27 to May 3): 41,203 blocks, 125.1M PRL, 39% of all PRL issued to date. 13,934 blocks on day one at difficulty 1. All solo coinbase, 6,698 addresses, no pools. Widely spread: top address 3.1%, top 10 10.5%, top 100 30.8%, 200 addresses hold half. 3,385 addresses won one block; 14 won 100+. 99.9% still unspent. Left off the bars; kept in the table."
+ },
+ "venue_arrivals_weekly": [
+  {
+   "week": 0,
+   "week_start": 1777248000,
+   "miner_origin": {
+    "safetrade": 0,
+    "otc": 3190,
+    "bridge": 0
+   },
+   "all_sources": {
+    "safetrade": 0,
+    "otc": 3192,
+    "bridge": 0
+   }
+  },
+  {
+   "week": 1,
+   "week_start": 1777852800,
+   "miner_origin": {
+    "safetrade": 0,
+    "otc": 264149,
+    "bridge": 0
+   },
+   "all_sources": {
+    "safetrade": 0,
+    "otc": 296845,
+    "bridge": 0
+   }
+  },
+  {
+   "week": 2,
+   "week_start": 1778457600,
+   "miner_origin": {
+    "safetrade": 0,
+    "otc": 2966607,
+    "bridge": 11
+   },
+   "all_sources": {
+    "safetrade": 0,
+    "otc": 3122847,
+    "bridge": 11
+   }
+  },
+  {
+   "week": 3,
+   "week_start": 1779062400,
+   "miner_origin": {
+    "safetrade": 278894,
+    "otc": 5337784,
+    "bridge": 51958
+   },
+   "all_sources": {
+    "safetrade": 553834,
+    "otc": 6175000,
+    "bridge": 208575
+   }
+  },
+  {
+   "week": 4,
+   "week_start": 1779667200,
+   "miner_origin": {
+    "safetrade": 1582573,
+    "otc": 5261395,
+    "bridge": 347407
+   },
+   "all_sources": {
+    "safetrade": 3392653,
+    "otc": 9445090,
+    "bridge": 536396
+   }
+  },
+  {
+   "week": 5,
+   "week_start": 1780272000,
+   "miner_origin": {
+    "safetrade": 0,
+    "otc": 5928555,
+    "bridge": 260522
+   },
+   "all_sources": {
+    "safetrade": 0,
+    "otc": 6657712,
+    "bridge": 316914
+   }
+  },
+  {
+   "week": 6,
+   "week_start": 1780876800,
+   "miner_origin": {
+    "safetrade": 0,
+    "otc": 3810077,
+    "bridge": 313641
+   },
+   "all_sources": {
+    "safetrade": 0,
+    "otc": 4218483,
+    "bridge": 355649
+   }
+  },
+  {
+   "week": 7,
+   "week_start": 1781481600,
+   "miner_origin": {
+    "safetrade": 2512539,
+    "otc": 1926782,
+    "bridge": 67119
+   },
+   "all_sources": {
+    "safetrade": 15183946,
+    "otc": 3033820,
+    "bridge": 95882
+   }
+  },
+  {
+   "week": 8,
+   "week_start": 1782086400,
+   "miner_origin": {
+    "safetrade": 5547269,
+    "otc": 850758,
+    "bridge": 58559
+   },
+   "all_sources": {
+    "safetrade": 16062078,
+    "otc": 1639733,
+    "bridge": 97807
+   }
+  },
+  {
+   "week": 9,
+   "week_start": 1782691200,
+   "miner_origin": {
+    "safetrade": 3513616,
+    "otc": 423718,
+    "bridge": 32355
+   },
+   "all_sources": {
+    "safetrade": 20470090,
+    "otc": 1698397,
+    "bridge": 84421
+   }
+  },
+  {
+   "week": 10,
+   "week_start": 1783296000,
+   "miner_origin": {
+    "safetrade": 0,
+    "otc": 232836,
+    "bridge": 22595
+   },
+   "all_sources": {
+    "safetrade": 0,
+    "otc": 543907,
+    "bridge": 35035
+   }
+  },
+  {
+   "week": 11,
+   "week_start": 1783900800,
+   "miner_origin": {
+    "safetrade": 0,
+    "otc": 385389,
+    "bridge": 81241
+   },
+   "all_sources": {
+    "safetrade": 0,
+    "otc": 437350,
+    "bridge": 103330
+   }
+  },
+  {
+   "week": 12,
+   "week_start": 1784505600,
+   "miner_origin": {
+    "safetrade": 0,
+    "otc": 454792,
+    "bridge": 83369
+   },
+   "all_sources": {
+    "safetrade": 0,
+    "otc": 504441,
+    "bridge": 98333
+   }
+  },
+  {
+   "week": 13,
+   "week_start": 1785110400,
+   "miner_origin": {
+    "safetrade": 0,
+    "otc": 452503,
+    "bridge": 21583
+   },
+   "all_sources": {
+    "safetrade": 0,
+    "otc": 569209,
+    "bridge": 31928
+   }
+  },
+  {
+   "week": 14,
+   "week_start": 1785715200,
+   "miner_origin": {
+    "safetrade": 0,
+    "otc": 38216,
+    "bridge": 49930
+   },
+   "all_sources": {
+    "safetrade": 0,
+    "otc": 44862,
+    "bridge": 54887
+   }
+  },
+  {
+   "week": 15,
+   "week_start": 1786320000,
+   "miner_origin": {
+    "safetrade": 0,
+    "otc": 41692,
+    "bridge": 108456
+   },
+   "all_sources": {
+    "safetrade": 0,
+    "otc": 46356,
+    "bridge": 119133
+   }
+  },
+  {
+   "week": 16,
+   "week_start": 1786924800,
+   "miner_origin": {
+    "safetrade": 0,
+    "otc": 18509,
+    "bridge": 15557
+   },
+   "all_sources": {
+    "safetrade": 0,
+    "otc": 46631,
+    "bridge": 63574
+   }
+  },
+  {
+   "week": 17,
+   "week_start": 1787529600,
+   "miner_origin": {
+    "safetrade": 0,
+    "otc": 389440,
+    "bridge": 8056
+   },
+   "all_sources": {
+    "safetrade": 0,
+    "otc": 465956,
+    "bridge": 11168
+   }
+  },
+  {
+   "week": 18,
+   "week_start": 1788134400,
+   "miner_origin": {
+    "safetrade": 0,
+    "otc": 6222,
+    "bridge": 37144
+   },
+   "all_sources": {
+    "safetrade": 0,
+    "otc": 19120,
+    "bridge": 44995
+   }
+  },
+  {
+   "week": 19,
+   "week_start": 1788739200,
+   "miner_origin": {
+    "safetrade": 0,
+    "otc": 473107,
+    "bridge": 191491
+   },
+   "all_sources": {
+    "safetrade": 0,
+    "otc": 632411,
+    "bridge": 232538
+   }
+  },
+  {
+   "week": 20,
+   "week_start": 1789344000,
+   "miner_origin": {
+    "safetrade": 5533799,
+    "otc": 1727123,
+    "bridge": 332963
+   },
+   "all_sources": {
+    "safetrade": 11210033,
+    "otc": 2729354,
+    "bridge": 409596
+   }
+  }
+ ],
+ "venue_arrivals_note": "Value arriving at the labelled venue addresses per week (SafeTrade hot wallet external inflow, Pearl OTC escrow settlements, bridge deposits), split into miner-origin (backward pro-rata origin fraction) and all sources. SafeTrade arrivals are lumpy because the exchange sweeps deposit addresses in batches (nothing reaches the labelled hot wallet in weeks 10-19); use weekly.first_spend for the timing of the miner decision.",
+ "selling_weekly": [
+  {
+   "week": 0,
+   "week_start": 1777248000,
+   "paid_to_miners": 125141265,
+   "moved_unsold": 18849,
+   "safetrade": 125,
+   "otc": 5389,
+   "bridge": 2,
+   "other": 0,
+   "price_close_usd": null
+  },
+  {
+   "week": 1,
+   "week_start": 1777852800,
+   "paid_to_miners": 19066321,
+   "moved_unsold": 1081323,
+   "safetrade": 5291,
+   "otc": 288811,
+   "bridge": 2293,
+   "other": 38,
+   "price_close_usd": 0.599
+  },
+  {
+   "week": 2,
+   "week_start": 1778457600,
+   "paid_to_miners": 15201798,
+   "moved_unsold": 2544034,
+   "safetrade": 97336,
+   "otc": 3322457,
+   "bridge": 36758,
+   "other": 4400,
+   "price_close_usd": 0.485
+  },
+  {
+   "week": 3,
+   "week_start": 1779062400,
+   "paid_to_miners": 12890429,
+   "moved_unsold": 3622883,
+   "safetrade": 487611,
+   "otc": 5534192,
+   "bridge": 76854,
+   "other": 16091,
+   "price_close_usd": 0.467
+  },
+  {
+   "week": 4,
+   "week_start": 1779667200,
+   "paid_to_miners": 12997487,
+   "moved_unsold": 2545040,
+   "safetrade": 1541290,
+   "otc": 6084998,
+   "bridge": 348977,
+   "other": 9494,
+   "price_close_usd": 0.792
+  },
+  {
+   "week": 5,
+   "week_start": 1780272000,
+   "paid_to_miners": 10567575,
+   "moved_unsold": 2139568,
+   "safetrade": 354873,
+   "otc": 5905394,
+   "bridge": 271413,
+   "other": 18880,
+   "price_close_usd": 0.6
+  },
+  {
+   "week": 6,
+   "week_start": 1780876800,
+   "paid_to_miners": 8462929,
+   "moved_unsold": 4202743,
+   "safetrade": 413750,
+   "otc": 3021725,
+   "bridge": 269819,
+   "other": 544,
+   "price_close_usd": 0.41
+  },
+  {
+   "week": 7,
+   "week_start": 1781481600,
+   "paid_to_miners": 7694775,
+   "moved_unsold": 2385925,
+   "safetrade": 2707673,
+   "otc": 1896650,
+   "bridge": 79513,
+   "other": 1060,
+   "price_close_usd": 0.569
+  },
+  {
+   "week": 8,
+   "week_start": 1782086400,
+   "paid_to_miners": 7537574,
+   "moved_unsold": 6933881,
+   "safetrade": 5897751,
+   "otc": 730592,
+   "bridge": 76645,
+   "other": 27104,
+   "price_close_usd": 0.549
+  },
+  {
+   "week": 9,
+   "week_start": 1782691200,
+   "paid_to_miners": 7189329,
+   "moved_unsold": 3313721,
+   "safetrade": 1924526,
+   "otc": 352249,
+   "bridge": 45500,
+   "other": 33783,
+   "price_close_usd": 0.43
+  },
+  {
+   "week": 10,
+   "week_start": 1783296000,
+   "paid_to_miners": 6545310,
+   "moved_unsold": 5180926,
+   "safetrade": 66145,
+   "otc": 282678,
+   "bridge": 40515,
+   "other": 68544,
+   "price_close_usd": 0.4
+  },
+  {
+   "week": 11,
+   "week_start": 1783900800,
+   "paid_to_miners": 8909057,
+   "moved_unsold": 9873201,
+   "safetrade": 150279,
+   "otc": 568125,
+   "bridge": 76546,
+   "other": 19994,
+   "price_close_usd": 0.31
+  },
+  {
+   "week": 12,
+   "week_start": 1784505600,
+   "paid_to_miners": 6273034,
+   "moved_unsold": 5772908,
+   "safetrade": 30536,
+   "otc": 403268,
+   "bridge": 38880,
+   "other": 14614,
+   "price_close_usd": 0.32
+  },
+  {
+   "week": 13,
+   "week_start": 1785110400,
+   "paid_to_miners": 5125092,
+   "moved_unsold": 4477206,
+   "safetrade": 23069,
+   "otc": 148287,
+   "bridge": 30793,
+   "other": 44813,
+   "price_close_usd": 0.26
+  },
+  {
+   "week": 14,
+   "week_start": 1785715200,
+   "paid_to_miners": 6297100,
+   "moved_unsold": 5511957,
+   "safetrade": 17576,
+   "otc": 107967,
+   "bridge": 49446,
+   "other": 13553,
+   "price_close_usd": 0.27
+  },
+  {
+   "week": 15,
+   "week_start": 1786320000,
+   "paid_to_miners": 6120836,
+   "moved_unsold": 3761965,
+   "safetrade": 42250,
+   "otc": 74560,
+   "bridge": 111775,
+   "other": 17630,
+   "price_close_usd": 0.27
+  },
+  {
+   "week": 16,
+   "week_start": 1786924800,
+   "paid_to_miners": 5670040,
+   "moved_unsold": 3485350,
+   "safetrade": 80725,
+   "otc": 77305,
+   "bridge": 18028,
+   "other": 20484,
+   "price_close_usd": 0.27
+  },
+  {
+   "week": 17,
+   "week_start": 1787529600,
+   "paid_to_miners": 6250605,
+   "moved_unsold": 5210203,
+   "safetrade": 110917,
+   "otc": 238341,
+   "bridge": 15573,
+   "other": 27879,
+   "price_close_usd": 0.27
+  },
+  {
+   "week": 18,
+   "week_start": 1788134400,
+   "paid_to_miners": 6490787,
+   "moved_unsold": 9907670,
+   "safetrade": 717423,
+   "otc": 244036,
+   "bridge": 81448,
+   "other": 4072,
+   "price_close_usd": 0.37
+  },
+  {
+   "week": 19,
+   "week_start": 1788739200,
+   "paid_to_miners": 6141684,
+   "moved_unsold": 2843839,
+   "safetrade": 2876797,
+   "otc": 906273,
+   "bridge": 165677,
+   "other": 19189,
+   "price_close_usd": 0.517
+  },
+  {
+   "week": 20,
+   "week_start": 1789344000,
+   "paid_to_miners": 6732768,
+   "moved_unsold": 6116465,
+   "safetrade": 1173757,
+   "otc": 801187,
+   "bridge": 247578,
+   "other": 67900,
+   "price_close_usd": 0.801
+  }
+ ],
+ "miner_balance_weekly": [
+  {
+   "week": 0,
+   "week_start": 1777248000,
+   "balance": 125123457,
+   "balance_miner_origin": 125123457,
+   "inflow": 125147823,
+   "outflow": 24365,
+   "wow": null,
+   "sold": 5514,
+   "sold_to_balance": null,
+   "price_close_usd": null
+  },
+  {
+   "week": 1,
+   "week_start": 1777852800,
+   "balance": 143074515,
+   "balance_miner_origin": 142945646,
+   "inflow": 19998371,
+   "outflow": 2047313,
+   "wow": 17951058,
+   "sold": 294102,
+   "sold_to_balance": 0.0023504945199843705,
+   "price_close_usd": 0.599
+  },
+  {
+   "week": 2,
+   "week_start": 1778457600,
+   "balance": 154052328,
+   "balance_miner_origin": 153783677,
+   "inflow": 22476767,
+   "outflow": 11498955,
+   "wow": 10977813,
+   "sold": 3419793,
+   "sold_to_balance": 0.023902181321390464,
+   "price_close_usd": 0.485
+  },
+  {
+   "week": 3,
+   "week_start": 1779062400,
+   "balance": 160467829,
+   "balance_miner_origin": 159685613,
+   "inflow": 28131462,
+   "outflow": 21715961,
+   "wow": 6415501,
+   "sold": 6021803,
+   "sold_to_balance": 0.03908933463180121,
+   "price_close_usd": 0.467
+  },
+  {
+   "week": 4,
+   "week_start": 1779667200,
+   "balance": 161874396,
+   "balance_miner_origin": 160891244,
+   "inflow": 30558750,
+   "outflow": 29152183,
+   "wow": 1406567,
+   "sold": 7626288,
+   "sold_to_balance": 0.04752533917561756,
+   "price_close_usd": 0.792
+  },
+  {
+   "week": 5,
+   "week_start": 1780272000,
+   "balance": 165757787,
+   "balance_miner_origin": 164593224,
+   "inflow": 24969641,
+   "outflow": 21086250,
+   "wow": 3883391,
+   "sold": 6260267,
+   "sold_to_balance": 0.03867360839449866,
+   "price_close_usd": 0.6
+  },
+  {
+   "week": 6,
+   "week_start": 1780876800,
+   "balance": 166806376,
+   "balance_miner_origin": 165465306,
+   "inflow": 20545735,
+   "outflow": 19497145,
+   "wow": 1048589,
+   "sold": 3435475,
+   "sold_to_balance": 0.0207258739524557,
+   "price_close_usd": 0.41
+  },
+  {
+   "week": 7,
+   "week_start": 1781481600,
+   "balance": 169489100,
+   "balance_miner_origin": 167107707,
+   "inflow": 20285744,
+   "outflow": 17603021,
+   "wow": 2682724,
+   "sold": 4604323,
+   "sold_to_balance": 0.02760279978746136,
+   "price_close_usd": 0.569
+  },
+  {
+   "week": 8,
+   "week_start": 1782086400,
+   "balance": 162548002,
+   "balance_miner_origin": 160446982,
+   "inflow": 18628972,
+   "outflow": 25570070,
+   "wow": -6941098,
+   "sold": 6628343,
+   "sold_to_balance": 0.039107783332379485,
+   "price_close_usd": 0.549
+  },
+  {
+   "week": 9,
+   "week_start": 1782691200,
+   "balance": 165127036,
+   "balance_miner_origin": 162569873,
+   "inflow": 17732007,
+   "outflow": 15152973,
+   "wow": 2579034,
+   "sold": 2276775,
+   "sold_to_balance": 0.014006785515579576,
+   "price_close_usd": 0.43
+  },
+  {
+   "week": 10,
+   "week_start": 1783296000,
+   "balance": 166749336,
+   "balance_miner_origin": 163858233,
+   "inflow": 11548120,
+   "outflow": 9925819,
+   "wow": 1622300,
+   "sold": 348823,
+   "sold_to_balance": 0.0021124523787855068,
+   "price_close_usd": 0.4
+  },
+  {
+   "week": 11,
+   "week_start": 1783900800,
+   "balance": 163588212,
+   "balance_miner_origin": 161048454,
+   "inflow": 15049699,
+   "outflow": 18210823,
+   "wow": -3161124,
+   "sold": 718404,
+   "sold_to_balance": 0.004308287020705138,
+   "price_close_usd": 0.31
+  },
+  {
+   "week": 12,
+   "week_start": 1784505600,
+   "balance": 164323678,
+   "balance_miner_origin": 161674107,
+   "inflow": 11106174,
+   "outflow": 10370709,
+   "wow": 735466,
+   "sold": 433804,
+   "sold_to_balance": 0.0026518047645144507,
+   "price_close_usd": 0.32
+  },
+  {
+   "week": 13,
+   "week_start": 1785110400,
+   "balance": 164558796,
+   "balance_miner_origin": 161905021,
+   "inflow": 7827867,
+   "outflow": 7592749,
+   "wow": 235118,
+   "sold": 171356,
+   "sold_to_balance": 0.001042795548916572,
+   "price_close_usd": 0.26
+  },
+  {
+   "week": 14,
+   "week_start": 1785715200,
+   "balance": 165272033,
+   "balance_miner_origin": 162567705,
+   "inflow": 8893032,
+   "outflow": 8179795,
+   "wow": 713237,
+   "sold": 125543,
+   "sold_to_balance": 0.0007629066513102101,
+   "price_close_usd": 0.27
+  },
+  {
+   "week": 15,
+   "week_start": 1786320000,
+   "balance": 168186037,
+   "balance_miner_origin": 165174826,
+   "inflow": 7787091,
+   "outflow": 4873087,
+   "wow": 2914004,
+   "sold": 116810,
+   "sold_to_balance": 0.000706774146113396,
+   "price_close_usd": 0.27
+  },
+  {
+   "week": 16,
+   "week_start": 1786924800,
+   "balance": 173141290,
+   "balance_miner_origin": 169363950,
+   "inflow": 10104499,
+   "outflow": 5149246,
+   "wow": 4955253,
+   "sold": 158030,
+   "sold_to_balance": 0.0009396142677409065,
+   "price_close_usd": 0.27
+  },
+  {
+   "week": 17,
+   "week_start": 1787529600,
+   "balance": 176189419,
+   "balance_miner_origin": 171848974,
+   "inflow": 11905636,
+   "outflow": 8857508,
+   "wow": 3048129,
+   "sold": 349258,
+   "sold_to_balance": 0.0020171849245203153,
+   "price_close_usd": 0.27
+  },
+  {
+   "week": 18,
+   "week_start": 1788134400,
+   "balance": 174816174,
+   "balance_miner_origin": 170398023,
+   "inflow": 14624283,
+   "outflow": 15997528,
+   "wow": -1373245,
+   "sold": 961459,
+   "sold_to_balance": 0.0054569622027075305,
+   "price_close_usd": 0.37
+  },
+  {
+   "week": 19,
+   "week_start": 1788739200,
+   "balance": 175354322,
+   "balance_miner_origin": 170805577,
+   "inflow": 12520980,
+   "outflow": 11982832,
+   "wow": 538148,
+   "sold": 3783070,
+   "sold_to_balance": 0.021640274543475595,
+   "price_close_usd": 0.517
+  },
+  {
+   "week": 20,
+   "week_start": 1789344000,
+   "balance": 174207821,
+   "balance_miner_origin": 169516098,
+   "inflow": 10646482,
+   "outflow": 11792983,
+   "wow": -1146501,
+   "sold": 1974944,
+   "sold_to_balance": 0.011262590949996659,
+   "price_close_usd": 0.801
+  }
+ ],
+ "miner_balance_note": "Balance = all unspent PRL on the 72,379 miner addresses at week end (UTC Monday). balance_miner_origin excludes PRL those addresses received from non-mining sources. sold_to_balance = PRL sold that week (SafeTrade + Pearl OTC, by miner spend time) / balance at end of prior week."
+}

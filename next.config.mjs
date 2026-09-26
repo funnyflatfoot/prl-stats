@@ -7,7 +7,9 @@ const nextConfig = {
   // serverless bundle. On 14.x the key lives under experimental; it moves to the top level in 15.
   experimental: {
     outputFileTracingIncludes: {
-      '/': ['./data/**']
+      '/': ['./data/**'],
+      '/miners': ['./data/**'],
+      '/api/miner-behavior': ['./data/**']
     }
   }
 }

@@ -8,7 +8,9 @@ Every number rendered is one of three things:
 
 1. chain data, scraped from the explorer into `data/`,
 2. the CoinGecko price feed,
-3. a constant in `config/` that carries a `source` string.
+3. a constant in `config/` that carries a `source` string,
+4. on `/miners`: the full-chain UTXO fate walk in `data/miner_behavior.json` and the same walk run
+   incrementally by `lib/prlIndexer.js` (prlscan labels, prlscan daily price, Blockscout WPRL log).
 
 Nothing else. There are no tunable inputs, no modelled numbers, no defaults that stand in for a
 measurement. A metric that needs an assumption to exist gets cut, not parameterised — a number the
@@ -25,16 +27,22 @@ rather than a placeholder.
 
 ```
 app/page.jsx              server component: reads the store, packs blocks for the client
+app/miners/page.jsx       /miners: reads data/miner_behavior.json, overlays live cron aggregates
+app/api/miner-behavior/   public JSON of the miner series (Blob if the cron has run, else snapshot)
+app/api/cron/prl-index/   hourly: advances the indexer from api.prlscan.com, writes Vercel Blob
+components/MinersDashboard.jsx  client page for /miners, same primitives as Dashboard.jsx
 components/Dashboard.jsx  client: hero, KPI strip, range selector, theme toggle, wiring
 components/ui.jsx         layout primitives: Section, Stat, Kpi, Eyebrow, Notes, table, flags
 components/charts.jsx     palette, axis props, tooltip, event lines, partial-day split
 components/panels/        one file per section
 lib/derive.js             every derived series, pure, no I/O
 lib/emission.js           E(t) and S·t/(t+H)
+lib/prlIndexer.js         miner-behaviour engine: address-level state, applyTx, weekly aggregates
+lib/blob.js               Vercel Blob over REST (no SDK, keeps package-lock untouched)
 lib/explorer.mjs          scraper, including the stale action id error
 lib/store.mjs             NDJSON store and checkpoint
 config/                   constants, entities, events, gpus, electricity, overhead, explorer
-scripts/                  ingest, market, selftest
+scripts/                  ingest, market, selftest, bootstrap-state (one-off Blob seed, console script)
 ```
 
 `lib/derive.js` is the single place a metric is defined. If a figure looks wrong it is either there or
@@ -54,6 +62,24 @@ npm run build
 
 A cold ingest from #99,000 takes roughly fifteen minutes and checkpoints as it goes, so it can be
 interrupted and resumed.
+
+## Miners page
+
+`/miners` follows every pool payout and solo coinbase output through the UTXO graph until it is
+unspent or lands on a prlscan-labelled sink (SafeTrade hot wallet, Pearl OTC settlement, Pearl
+Trade, PearlBridge). Value splits pro rata at each hop; no thresholds, no hub cutoff, no time
+cutoff. Two data paths feed it:
+
+- `data/miner_behavior.json`, the full-chain pass (all sections, including size buckets). Refresh by
+  re-running the browser analysis in the Pearl Network project notes and committing the JSON.
+- The hourly cron, `vercel.json` → `/api/cron/prl-index`, which replays new blocks through
+  `lib/prlIndexer.js` and stores state + aggregates in Vercel Blob (`prl/miner-state.json`,
+  `prl/miner-behavior.json`). The page swaps in the live weekly series once Blob is ahead of the
+  snapshot. Env: `BLOB_READ_WRITE_TOKEN`, `CRON_SECRET`. Seed the state once with
+  `scripts/bootstrap-state.js` (see its header) and upload it as `prl/miner-state.json`; without a
+  seed the cron indexes from genesis at ~8 req/s, which takes days.
+
+`/api/miner-behavior` is public and CORS-open, cached 5 minutes at the edge.
 
 ## The scraper's one fragile part
 
