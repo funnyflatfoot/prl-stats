@@ -72,10 +72,11 @@ cutoff. Two data paths feed it:
 
 - `data/miner_behavior.json`, the full-chain pass (all sections, including size buckets). Refresh by
   re-running the browser analysis in the Pearl Network project notes and committing the JSON.
-- The hourly cron, `vercel.json` → `/api/cron/prl-index`, which replays new blocks through
+- The hourly trigger, `.github/workflows/prl-index.yml` → `/api/cron/prl-index` (Vercel Hobby cron is
+  daily-only, so GitHub Actions calls the route), which replays new blocks through
   `lib/prlIndexer.js` and stores state + aggregates in Vercel Blob (`prl/miner-state.json`,
   `prl/miner-behavior.json`). The page swaps in the live weekly series once Blob is ahead of the
-  snapshot. Env: `BLOB_READ_WRITE_TOKEN`, `CRON_SECRET`. Seed the state once with
+  snapshot. Env: `BLOB_READ_WRITE_TOKEN`, `CRON_SECRET` on Vercel; `CRON_SECRET` also as a GitHub repo secret. Seed the state once with
   `scripts/bootstrap-state.js` (see its header) and upload it as `prl/miner-state.json`; without a
   seed the cron indexes from genesis at ~8 req/s, which takes days.
 
