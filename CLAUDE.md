@@ -68,7 +68,11 @@ interrupted and resumed.
 `/miners` follows every pool payout and solo coinbase output through the UTXO graph until it is
 unspent or lands on a prlscan-labelled sink (SafeTrade hot wallet, Pearl OTC settlement, Pearl
 Trade, PearlBridge). Value splits pro rata at each hop; no thresholds, no hub cutoff, no time
-cutoff. Two data paths feed it:
+cutoff. One structural rule on top of the labels: since 2026-09-15 SafeTrade's labelled hot wallet
+is drained into a rolling chain of fresh change addresses, so the SafeTrade sink is a cluster =
+labelled wallet + every fresh address taking >= 25% of a tx that spends a cluster address (see
+`safetrade_cluster` in the JSON). The live indexer in `lib/prlIndexer.js` does not yet apply the
+cluster rule; until it does, its SafeTrade series undercounts after Sep 15. Two data paths feed it:
 
 - `data/miner_behavior.json`, the full-chain pass (all sections, including size buckets). Refresh by
   re-running the browser analysis in the Pearl Network project notes and committing the JSON.

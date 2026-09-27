@@ -175,7 +175,7 @@ export default function MinersDashboard({ data, live }) {
             <Kpi label="Miner addresses" value={num(t.miners)} sub="pool payouts + solo coinbase" />
             <Kpi label="Mined" value={`${millions(recv, 2)} PRL`} sub={`${share(recv / data.supply_at_tip)} of issuance`} />
             <Kpi label="Held" value={share(gt.unspent / recv)} sub={`${millions(gt.unspent, 2)} PRL unspent`} />
-            <Kpi label="Sold or bridged" value={share((sold + gt.bridge) / recv)} sub={`SafeTrade ${share(gt.safetrade / recv)} · OTC ${share(gt.otc / recv)} · bridged ${share(gt.bridge / recv)}`} />
+            <Kpi label="Sold or bridged" value={share((sold + gt.bridge) / recv)} sub={`SafeTrade ${share(gt.safetrade / recv)} · OTC ${share(gt.otc / recv)} · bridge ${share(gt.bridge / recv)}`} />
           </KpiRow>
         </div>
 
@@ -253,7 +253,7 @@ export default function MinersDashboard({ data, live }) {
               ? 'Where each week’s mining rewards are today. Sold = SafeTrade + Pearl OTC. Recent weeks are still ageing.'
               : 'PRL miners moved off their addresses each week, by where it ended up. Sold = SafeTrade + Pearl OTC.'
           }
-          whatItImplies="Two selling windows: OTC-led in May, SafeTrade-led after the June listing, then a July to August lull at $0.26 to $0.40. Selling returned with the September move."
+          whatItImplies="Two selling windows: OTC-led in May, SafeTrade-led after the June listing, then a July to August lull at $0.26 to $0.40. Selling returned with the September move, SafeTrade-led again."
           definition="by reward week: fate today of PRL paid in week w. By week sold: PRL leaving miner addresses in week w, by eventual destination. Launch week excluded, see note."
           source="chain · prlscan labels · price"
           blockRange={meta.blockRange}
@@ -336,7 +336,7 @@ export default function MinersDashboard({ data, live }) {
           ordinal="03"
           title="Miner balances"
           whatItIs="Unspent PRL on all miner addresses at week end, and the week-over-week change."
-          whatItImplies="Balances have sat in a 162 to 176M band since late May. Only three weeks show a net drawdown."
+          whatItImplies="Balances have sat in a 160 to 176M band since late May. Five weeks show a net drawdown, three of them since the end of August."
           definition={`balance = all unspent PRL on the ${num(t.miners)} miner addresses at week end (UTC Monday)`}
           source="chain"
           blockRange={meta.blockRange}
@@ -387,7 +387,7 @@ export default function MinersDashboard({ data, live }) {
           ordinal="04"
           title="Sold ÷ miner balance"
           whatItIs="PRL sold in the week as a share of the miner balance at the start of the week. Sold = SafeTrade + Pearl OTC."
-          whatItImplies="Under 5% of holdings a week even at the May peak; 0.1 to 0.4% through July and August; back to 2% in the September move."
+          whatItImplies="Under 5% of holdings a week even at the May peak; 0.1 to 0.4% through July and August; 2% in the week of Sep 14 and 1% the week after, at prices above $1."
           definition="sold(w) ÷ balance(w−1)"
           source="chain · prlscan labels · price"
           blockRange={meta.blockRange}
@@ -432,7 +432,7 @@ export default function MinersDashboard({ data, live }) {
           ordinal="05"
           title="WPRL supply"
           whatItIs="Circulating WPRL on Ethereum, daily: the bridge’s TVL."
-          whatItImplies={`Flat at 0.8 to 1.0M from mid-June to end of August, then doubled to ${millions(data.wprl.total_supply_now, 2)} in September. PRL-side bridge deposits: ${millions(bfIn, 2)} in, ${millions(bfOut, 2)} out.`}
+          whatItImplies={`Flat at 0.8 to 1.0M from mid-June to end of August, then more than doubled to ${millions(data.wprl.total_supply_now, 2)} by ${data.wprl_supply_daily[data.wprl_supply_daily.length - 1].date.slice(5)}. PRL-side bridge deposits: ${millions(bfIn, 2)} in, ${millions(bfOut, 2)} out.`}
           definition={`cumulative mints minus burns of the WPRL ERC-20 (${data.wprl.contract.slice(0, 6)}…${data.wprl.contract.slice(-4)}), reconciled to totalSupply()`}
           source="Blockscout transfer log"
           blockRange={meta.blockRange}
@@ -465,7 +465,8 @@ export default function MinersDashboard({ data, live }) {
         <footer className="grid gap-x-12 gap-y-6 border-t border-line pt-[26px]" style={{ marginTop: 'clamp(56px, 8vw, 96px)', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' }}>
           <p className="m-0 text-note text-muted">
             <span className="text-ink2">Miner</span>: address paid by a prlscan-labelled pool, or a solo coinbase. Venue-labelled addresses excluded.{' '}
-            <span className="text-ink2">Destination</span>: each payout output followed through its spends until it is unspent or reaches a labelled address (SafeTrade hot wallet, Pearl OTC escrow settlement, Pearl Trade, PearlBridge). Value splits pro rata at each hop. No thresholds, no time cutoff.
+            <span className="text-ink2">Destination</span>: each payout output followed through its spends until it is unspent or reaches a labelled address (SafeTrade hot wallet, Pearl OTC escrow settlement, Pearl Trade, PearlBridge). Value splits pro rata at each hop. No thresholds, no time cutoff.{' '}
+            <span className="text-ink2">SafeTrade since Sep 15</span>: the labelled hot wallet was drained into a rolling chain of fresh change addresses, so the cluster is the labelled wallet plus every fresh address taking at least a quarter of a transaction that spends a cluster address; smaller outputs are withdrawals.
           </p>
           <p className="m-0 text-note text-muted">
             <span className="text-ink2">Held</span>: unspent anywhere on chain. Coins at unlabelled exchanges (CoinEx, BigONE, Bithumb) count as held.{' '}
