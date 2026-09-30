@@ -1,16 +1,12 @@
 # Miners page: data setup
 
-1. Vercel → Storage → create a Blob store, attach to `prl-stats`. This adds `BLOB_READ_WRITE_TOKEN`.
-2. Vercel → Settings → Environment Variables → `CRON_SECRET` (any long random string), and the same value
-   as a GitHub repo secret (Settings → Secrets and variables → Actions). The hourly workflow
-   `.github/workflows/prl-index.yml` sends it as `Authorization: Bearer …`; the route rejects anything else.
-3. Seed the indexer state so the cron does not start from genesis:
-   - open the explorer tab that holds the `prlscrape` IndexedDB dump, paste `scripts/bootstrap-state.js`
-     into the console; it downloads `prl-state.json`;
-   - upload it to the Blob store as `prl/miner-state.json` (Vercel dashboard → Storage → Blob → Upload,
-     or `curl -X PUT "https://blob.vercel-storage.com/prl/miner-state.json" -H "authorization: Bearer $BLOB_READ_WRITE_TOKEN" -H "x-api-version: 7" -H "x-add-random-suffix: 0" -H "x-allow-overwrite: 1" --data-binary @prl-state.json`).
-4. Trigger once: `curl -H "authorization: Bearer $CRON_SECRET" https://prl-stats.vercel.app/api/cron/prl-index`.
-   Each run advances up to ~50 s of blocks and resumes next hour until caught up (or run the
-   `prl-index` workflow by hand from the Actions tab).
+1. turso.tech → create a database `prl` (free tier). Copy its URL (`libsql://…turso.io`) and create an auth token.
+2. GitHub repo → Settings → Secrets and variables → Actions: `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`.
+   Vercel project → Settings → Environment Variables: the same two.
+3. GitHub → Actions → `prl-daily` → Run workflow. The first run backfills the chain from block 1
+   (about 4 h); if it stops early, run it again and it resumes. Every later run is the 03:10 UTC schedule.
+4. When a run finishes, `/miners` shows "Refresh: daily · <time>" in the header and `/api/miner-behavior`
+   returns `"source":"db"`. Until then both serve the committed snapshot.
 
-Until step 3 runs, `/miners` and `/api/miner-behavior` serve the committed snapshot in `data/miner_behavior.json`.
+Local dry run without network: `PRL_ANALYZE_ONLY=1 PRL_FIXTURES=<dir with labels.json, price.json, wprl.json>` against a
+cache dir holding `chunk-00000.ndjson.gz`… and a Turso (or compatible) endpoint.

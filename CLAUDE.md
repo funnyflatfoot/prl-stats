@@ -9,8 +9,8 @@ Every number rendered is one of three things:
 1. chain data, scraped from the explorer into `data/`,
 2. the CoinGecko price feed,
 3. a constant in `config/` that carries a `source` string,
-4. on `/miners`: the full-chain UTXO fate walk in `data/miner_behavior.json` and the same walk run
-   incrementally by `lib/prlIndexer.js` (prlscan labels, prlscan daily price, Blockscout WPRL log).
+4. on `/miners`: the full-chain UTXO fate walk in `scripts/prl-chain.mjs`, run daily by GitHub Actions
+   and read from Turso (prlscan labels, prlscan daily price, Blockscout WPRL log).
 
 Nothing else. There are no tunable inputs, no modelled numbers, no defaults that stand in for a
 measurement. A metric that needs an assumption to exist gets cut, not parameterised — a number the
@@ -27,9 +27,8 @@ rather than a placeholder.
 
 ```
 app/page.jsx              server component: reads the store, packs blocks for the client
-app/miners/page.jsx       /miners: reads data/miner_behavior.json, overlays live cron aggregates
-app/api/miner-behavior/   public JSON of the miner series (Blob if the cron has run, else snapshot)
-app/api/cron/prl-index/   hourly: advances the indexer from api.prlscan.com, writes Vercel Blob
+app/miners/page.jsx       /miners: same JSON as the API (Turso `aggregates`, else data/miner_behavior.json)
+app/api/miner-behavior/   public JSON of the miner-behaviour result, edge-cached 5 min
 components/MinersDashboard.jsx  client page for /miners, same primitives as Dashboard.jsx
 components/Dashboard.jsx  client: hero, KPI strip, range selector, theme toggle, wiring
 components/ui.jsx         layout primitives: Section, Stat, Kpi, Eyebrow, Notes, table, flags
@@ -37,12 +36,12 @@ components/charts.jsx     palette, axis props, tooltip, event lines, partial-day
 components/panels/        one file per section
 lib/derive.js             every derived series, pure, no I/O
 lib/emission.js           E(t) and S·t/(t+H)
-lib/prlIndexer.js         miner-behaviour engine: address-level state, applyTx, weekly aggregates
-lib/blob.js               Vercel Blob over REST (no SDK, keeps package-lock untouched)
+lib/db.js                 Turso (libSQL) over its HTTP pipeline API, no SDK
+lib/minerBehavior.js      loads the miner-behaviour JSON (Turso row, else snapshot) for page and API
 lib/explorer.mjs          scraper, including the stale action id error
 lib/store.mjs             NDJSON store and checkpoint
 config/                   constants, entities, events, gpus, electricity, overhead, explorer
-scripts/                  ingest, market, selftest, bootstrap-state (one-off Blob seed, console script)
+scripts/                  ingest, market, selftest, prl-chain (daily miner-behaviour job)
 ```
 
 `lib/derive.js` is the single place a metric is defined. If a figure looks wrong it is either there or
@@ -71,20 +70,19 @@ Trade, PearlBridge). Value splits pro rata at each hop; no thresholds, no hub cu
 cutoff. One structural rule on top of the labels: since 2026-09-15 SafeTrade's labelled hot wallet
 is drained into a rolling chain of fresh change addresses, so the SafeTrade sink is a cluster =
 labelled wallet + every fresh address taking >= 25% of a tx that spends a cluster address (see
-`safetrade_cluster` in the JSON). The live indexer in `lib/prlIndexer.js` does not yet apply the
-cluster rule; until it does, its SafeTrade series undercounts after Sep 15. Two data paths feed it:
+`safetrade_cluster` in the JSON).
 
-- `data/miner_behavior.json`, the full-chain pass (all sections, including size buckets). Refresh by
-  re-running the browser analysis in the Pearl Network project notes and committing the JSON.
-- The hourly trigger, `.github/workflows/prl-index.yml` → `/api/cron/prl-index` (Vercel Hobby cron is
-  daily-only, so GitHub Actions calls the route), which replays new blocks through
-  `lib/prlIndexer.js` and stores state + aggregates in Vercel Blob (`prl/miner-state.json`,
-  `prl/miner-behavior.json`). The page swaps in the live weekly series once Blob is ahead of the
-  snapshot. Env: `BLOB_READ_WRITE_TOKEN`, `CRON_SECRET` on Vercel; `CRON_SECRET` also as a GitHub repo secret. Seed the state once with
-  `scripts/bootstrap-state.js` (see its header) and upload it as `prl/miner-state.json`; without a
-  seed the cron indexes from genesis at ~8 req/s, which takes days.
-
-`/api/miner-behavior` is public and CORS-open, cached 5 minutes at the edge.
+The whole thing runs once a day in GitHub Actions (`.github/workflows/prl-daily.yml`, 03:10 UTC,
+`scripts/prl-chain.mjs`): pull new blocks from the explorer batch action (prlscan API fallback),
+append them to the chain dump (gzipped NDJSON chunks in Turso table `chunks`, mirrored in the
+Actions cache `.prl-cache` for speed), refresh labels, price and the WPRL log, run the walk, write
+the page JSON to Turso `aggregates` (key `miner_behavior`). `/miners` and `/api/miner-behavior`
+read that row; `data/miner_behavior.json` is the fallback until the first run publishes. The first
+run backfills from block 1 (about 4 h at the explorer's rate; if it times out, rerun, it resumes
+from the last saved chunk). Secrets: `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN` on both GitHub and
+Vercel. The explorer server action id (`ACTION` in prl-chain.mjs) rotates on explorer redeploys;
+the script falls back to prlscan per-tx fetches (slower) when it does, so a rotation degrades a
+run rather than failing it.
 
 ## The scraper's one fragile part
 

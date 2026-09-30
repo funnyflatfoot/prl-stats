@@ -7,11 +7,9 @@ import { Section, Stat, StatRow, Kpi, KpiRow, Eyebrow, SortableTable, Footnote }
 import { COLORS, HAIR, AXIS, TICK, CHART_HEIGHT, TipBox, Legend, yAxisProps } from '@/components/charts'
 import { num, pct, prl, millions, usdExact, ts } from '@/lib/format'
 
-/* Miner behaviour. Every number is the output of the fate walk in lib/prlIndexer.js (live, via
-   /api/miner-behavior) or the same walk run over the full chain dump (data/miner_behavior.json).
-   Labels are prlscan's; there are no thresholds and no time cutoffs. The size-bucket sections
-   come from the full-chain pass only: they need the whole graph and are refreshed by re-running
-   scripts/analyze-browser.js, not by the cron. */
+/* Miner behaviour. Every number is the output of the full-graph fate walk in scripts/prl-chain.mjs,
+   run daily by GitHub Actions and read from Turso (data/miner_behavior.json is the fallback snapshot).
+   Labels are prlscan's plus the SafeTrade change-chain cluster; no thresholds, no time cutoffs. */
 
 const HELD = 'var(--s1)'
 const SAFETRADE = 'var(--s2)'
@@ -165,7 +163,7 @@ export default function MinersDashboard({ data, live }) {
           <div className="grid gap-[7px] pb-1.5">
             <MetaRow label="Snapshot" value={`#${num(data.tip_height)} · ${ts(data.tip_time)}`} />
             <MetaRow label="Transactions" value={num(data.n_tx)} />
-            <MetaRow label="Series" value={live ? `live · indexed to #${num(live.height)}` : 'snapshot'} />
+            <MetaRow label="Refresh" value={live ? `daily · ${ts(Date.parse(live.updated_at) / 1000)}` : 'committed snapshot'} />
             <MetaRow label="Price feed" value="prlscan daily · OTC VWAP → SafeTrade → CMC" last />
           </div>
         </div>
@@ -478,7 +476,7 @@ export default function MinersDashboard({ data, live }) {
             <br />
             <span className="block text-ink2">#{num(data.tip_height)} · {ts(data.tip_time)}</span>
             <span className="block text-ink2">{num(data.n_tx)} transactions · {num(data.n_outputs)} outputs</span>
-            {live ? <span className="block text-ink2">live series indexed to #{num(live.height)} · {ts(live.time)}</span> : null}
+            {live ? <span className="block text-ink2">published {ts(Date.parse(live.updated_at) / 1000)} by the daily job</span> : null}
           </p>
         </footer>
       </div>
