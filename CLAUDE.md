@@ -26,7 +26,7 @@ rather than a placeholder.
 ## Where things live
 
 ```
-app/page.jsx              server component: reads the store, packs blocks for the client
+app/page.jsx              server component: loads the store (lib/chainData.js), packs blocks for the client
 app/miners/page.jsx       /miners: same JSON as the API (Turso `aggregates`, else data/miner_behavior.json)
 app/api/miner-behavior/   public JSON of the miner-behaviour result, edge-cached 5 min
 components/MinersDashboard.jsx  client page for /miners, same primitives as Dashboard.jsx
@@ -38,10 +38,11 @@ lib/derive.js             every derived series, pure, no I/O
 lib/emission.js           E(t) and S·t/(t+H)
 lib/db.js                 Turso (libSQL) over its HTTP pipeline API, no SDK
 lib/minerBehavior.js      loads the miner-behaviour JSON (Turso row, else snapshot) for page and API
+lib/chainData.js          loads blocks/market/checkpoint (Turso `files` copy, else committed data/), 5-min cache
 lib/explorer.mjs          scraper, including the stale action id error
 lib/store.mjs             NDJSON store and checkpoint
 config/                   constants, entities, events, gpus, electricity, overhead, explorer
-scripts/                  ingest, market, selftest, prl-chain (daily miner-behaviour job)
+scripts/                  ingest, market, selftest, prl-chain (daily miner-behaviour job), prl-sync-chain (data/ <-> Turso)
 ```
 
 `lib/derive.js` is the single place a metric is defined. If a figure looks wrong it is either there or
@@ -62,6 +63,12 @@ npm run build
 A cold ingest from #99,000 takes roughly fifteen minutes and checkpoints as it goes, so it can be
 interrupted and resumed.
 
+Nobody runs these by hand any more: the daily GitHub Actions job (`.github/workflows/prl-daily.yml`)
+pulls the store from Turso (`files` table), runs `ingest` and `market`, pushes the store back, then
+refreshes the Miners page. The page reads the Turso copy when `TURSO_DATABASE_URL` is set and the
+committed `data/` otherwise, so `data/` in git is only the fallback. Refreshing it by hand and
+committing still works (the pull keeps whichever blocks.ndjson reaches further).
+
 ## Miners page
 
 `/miners` follows every pool payout and solo coinbase output through the UTXO graph until it is
@@ -72,7 +79,7 @@ is drained into a rolling chain of fresh change addresses, so the SafeTrade sink
 labelled wallet + every fresh address taking >= 25% of a tx that spends a cluster address (see
 `safetrade_cluster` in the JSON).
 
-The whole thing runs once a day in GitHub Actions (`.github/workflows/prl-daily.yml`, 03:10 UTC,
+The whole thing runs once a day in GitHub Actions (`.github/workflows/prl-daily.yml`, 18:30 UTC (00:00 IST),
 `scripts/prl-chain.mjs`): pull new blocks from the explorer batch action (prlscan API fallback),
 append them to the chain dump (gzipped NDJSON chunks in Turso table `chunks`, mirrored in the
 Actions cache `.prl-cache` for speed), refresh labels, price and the WPRL log, run the walk, write
