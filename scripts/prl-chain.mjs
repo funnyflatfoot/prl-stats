@@ -1,22 +1,23 @@
 #!/usr/bin/env node
 // Daily miner-behaviour pipeline. Runs in GitHub Actions (see .github/workflows/prl-daily.yml).
-//   1. load the chain dump (NDJSON chunks) from the local cache, filling gaps from Turso
-//   2. scrape new blocks from the explorer batch action (prlscan API as fallback), append chunks, upload
+//   1. load the chain dump (gzipped NDJSON chunks) from .prl-cache, which the Actions cache carries between runs
+//   2. scrape new blocks from the explorer batch action (prlscan API as fallback) and append chunks
 //   3. refresh prlscan labels, PRL price, WPRL mint/burn log
 //   4. full-graph fate walk with the SafeTrade change-chain cluster rule
-//   5. write the page's JSON to Turso `aggregates` (key miner_behavior)
-// Env: TURSO_DATABASE_URL, TURSO_AUTH_TOKEN. Optional: PRL_CACHE_DIR (default .prl-cache), PRL_STOP_AT (height, for tests),
-//      PRL_SCRAPE_BUDGET_MS (default 4.5 h), PRL_ANALYZE_ONLY=1 (skip scraping).
+//   5. write data/miner_behavior.json, which the workflow commits
+// No credentials. If the cache is ever lost the next run re-backfills from block 1 (~4 h) and resumes the day after.
+// Env (all optional): PRL_CACHE_DIR (default .prl-cache), PRL_OUT (default data/miner_behavior.json),
+//      PRL_STOP_AT (height, for tests), PRL_SCRAPE_BUDGET_MS (default 4.5 h), PRL_ANALYZE_ONLY=1 (skip scraping).
 import { mkdirSync, existsSync, readFileSync, writeFileSync, readdirSync } from 'node:fs'
 import { gzipSync, gunzipSync } from 'node:zlib'
 import path from 'node:path'
-import { batch, query, ensureSchema, getMeta, setMeta, putAggregate } from '../lib/db.js'
 
 const CACHE = process.env.PRL_CACHE_DIR || '.prl-cache'
 const EXPLORER = 'https://explorer.pearlresearch.ai'
 const ACTION = '40dcb07d2a02b501b109109b0a6869d2cf455eef61' // explorer batch tx server action; rotates on explorer redeploys
 const API = 'https://api.prlscan.com/v1'
-const CHUNK_BYTES = 2e6 // uncompressed; ~0.6 MB gzipped per Turso row
+const OUT = process.env.PRL_OUT || 'data/miner_behavior.json'
+const CHUNK_BYTES = 8e6 // uncompressed per chunk file
 const W0 = 1777248000
 const sleep = ms => new Promise(r => setTimeout(r, ms))
 const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a)
@@ -24,19 +25,16 @@ mkdirSync(CACHE, { recursive: true })
 
 // ---------- chunk store ----------
 const cachePath = id => path.join(CACHE, `chunk-${String(id).padStart(5, '0')}.ndjson.gz`)
-async function loadChunk(id) {
+const STATE = path.join(CACHE, 'state.json')
+const loadChunk = id => {
   const p = cachePath(id)
-  if (existsSync(p)) return gunzipSync(readFileSync(p)).toString('utf8')
-  const r = await query('SELECT gz FROM chunks WHERE id = ?', [id])
-  if (!r.rows.length) throw new Error(`chunk ${id} missing in db`)
-  writeFileSync(p, r.rows[0].gz)
-  return gunzipSync(r.rows[0].gz).toString('utf8')
+  if (!existsSync(p)) throw new Error(`chunk ${id} missing from ${CACHE}; delete the cache to re-backfill from block 1`)
+  return gunzipSync(readFileSync(p)).toString('utf8')
 }
-async function saveChunk(id, blocksTo, text) {
-  const gz = gzipSync(Buffer.from(text, 'utf8'), { level: 6 })
-  writeFileSync(cachePath(id), gz)
-  await query('INSERT INTO chunks (id, blocks_to, bytes, gz) VALUES (?, ?, ?, ?) ON CONFLICT(id) DO UPDATE SET blocks_to = excluded.blocks_to, bytes = excluded.bytes, gz = excluded.gz', [id, blocksTo, text.length, gz])
-}
+const saveChunk = (id, text) => writeFileSync(cachePath(id), gzipSync(Buffer.from(text, 'utf8'), { level: 6 }))
+// State lives beside the chunks so a lost cache and a lost checkpoint can never disagree.
+const readState = () => { try { return JSON.parse(readFileSync(STATE, 'utf8')) } catch { return { next: 1, nextChunk: 0 } } }
+const saveState = st => writeFileSync(STATE, JSON.stringify(st))
 
 // ---------- fetch helpers ----------
 async function fetchRetry(url, opts = {}, tries = 8) {
@@ -84,7 +82,7 @@ async function scrape(state) {
   const t0 = Date.now(); const budget = Number(process.env.PRL_SCRAPE_BUDGET_MS || 4.5 * 3600e3)
   const stopAt = process.env.PRL_STOP_AT ? Number(process.env.PRL_STOP_AT) : Infinity
   let useExplorerTxs = true; let buf = []; let bufBytes = 0; let blocks = 0
-  const flush = async () => { if (!buf.length) return; await saveChunk(state.nextChunk, state.next - 1, buf.join('\n') + '\n'); state.nextChunk++; await setMeta('next_block', state.next); await setMeta('next_chunk', state.nextChunk); log(`chunk ${state.nextChunk - 1} saved, blocks <= ${state.next - 1}`); buf = []; bufBytes = 0 }
+  const flush = () => { if (!buf.length) return; saveChunk(state.nextChunk, buf.join('\n') + '\n'); state.nextChunk++; saveState(state); log(`chunk ${state.nextChunk - 1} saved, blocks <= ${state.next - 1}`); buf = []; bufBytes = 0 }
   while (state.next <= stopAt && Date.now() - t0 < budget) {
     const hs = []; for (let h = state.next; h < state.next + 60 && h <= stopAt; h++) hs.push(h)
     let bl = await pool(hs, 6, explorerBlock)
@@ -104,10 +102,10 @@ async function scrape(state) {
       blocks++
     }
     state.next = bl[bl.length - 1].h + 1
-    if (bufBytes >= CHUNK_BYTES) await flush()
+    if (bufBytes >= CHUNK_BYTES) flush()
     if (end >= 0) break // reached the tip
   }
-  await flush()
+  flush()
   log(`scraped ${blocks} blocks in ${((Date.now() - t0) / 60e3).toFixed(1)} min, next block ${state.next}`)
   return blocks
 }
@@ -168,7 +166,7 @@ async function analyze(state, labels) {
   const txFirstOut = new Map(); const txHeight = [], txCb = [], txIn = [], txOutStart = [], txOutN = []
   const blocks = new Map(); let nOut = 0; const pending = []
   for (let c = 0; c < state.nextChunk; c++) {
-    const text = await loadChunk(c)
+    const text = loadChunk(c)
     let p = 0
     while (p < text.length) {
       let e = text.indexOf('\n', p); if (e < 0) e = text.length
@@ -332,8 +330,7 @@ function assemble(A, price, wprl) {
 
 // ---------- main ----------
 const main = async () => {
-  await ensureSchema()
-  const state = { next: Number((await getMeta('next_block')) || 1), nextChunk: Number((await getMeta('next_chunk')) || 0) }
+  const state = readState()
   log(`state: next block ${state.next}, chunks ${state.nextChunk}, cache files ${readdirSync(CACHE).length}`)
   if (!process.env.PRL_ANALYZE_ONLY) await scrape(state)
   if (state.nextChunk === 0) { log('no chain data yet'); return }
@@ -344,9 +341,8 @@ const main = async () => {
   } else { labels = await refreshLabels(); price = await refreshPrice(); wprl = await refreshWprl() }
   const A = await analyze(state, labels)
   const out = assemble(A, price, wprl)
-  await putAggregate('miner_behavior', out)
-  await setMeta('last_run', new Date().toISOString())
-  writeFileSync(path.join(CACHE, 'miner_behavior.json'), JSON.stringify(out))
-  log(`published: tip #${out.tip_height} ${new Date(out.tip_time * 1000).toISOString()}, miners ${out.totals.miners}, mined ${(out.totals.recv / 1e6).toFixed(2)}M, safetrade ${(out.totals.fate.safetrade / 1e6).toFixed(2)}M, otc ${((out.totals.fate.otc + out.totals.fate.pearl_trade) / 1e6).toFixed(2)}M, cluster ${JSON.stringify(out.safetrade_cluster.txs)} txs`)
+  mkdirSync(path.dirname(OUT), { recursive: true })
+  writeFileSync(OUT, JSON.stringify(out))
+  log(`wrote ${OUT}: tip #${out.tip_height} ${new Date(out.tip_time * 1000).toISOString()}, miners ${out.totals.miners}, mined ${(out.totals.recv / 1e6).toFixed(2)}M, safetrade ${(out.totals.fate.safetrade / 1e6).toFixed(2)}M, otc ${((out.totals.fate.otc + out.totals.fate.pearl_trade) / 1e6).toFixed(2)}M, cluster ${JSON.stringify(out.safetrade_cluster.txs)} txs`)
 }
 main().catch(e => { console.error(e); process.exit(1) })

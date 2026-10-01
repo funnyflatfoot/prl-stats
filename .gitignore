@@ -9,3 +9,6 @@ out
 # data/blocks.ndjson
 # data/checkpoint.json
 # data/market.json
+
+# chain dump cache for the nightly job (lives in the Actions cache, never in git)
+.prl-cache/

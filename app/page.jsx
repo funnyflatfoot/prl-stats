@@ -2,7 +2,6 @@ import { readFileSync, existsSync } from 'node:fs'
 import path from 'node:path'
 import Dashboard from '@/components/Dashboard'
 import EmptyState from '@/components/EmptyState'
-import { loadChainData } from '@/lib/chainData'
 
 export const dynamic = 'force-dynamic'
 
@@ -14,10 +13,26 @@ function readJson(p, fallback = null) {
   }
 }
 
-export default async function Page() {
+function readBlocks(file) {
+  if (!existsSync(file)) return []
+  const byHeight = new Map()
+  for (const line of readFileSync(file, 'utf8').split('\n')) {
+    if (!line) continue
+    try {
+      const b = JSON.parse(line)
+      byHeight.set(b.height, b)
+    } catch {
+      /* skip malformed line */
+    }
+  }
+  return [...byHeight.values()].sort((a, b) => a.height - b.height)
+}
+
+export default function Page() {
   const root = process.cwd()
-  // blocks, market and checkpoint: the daily job's copy in Turso, else the committed data/ files
-  const { blocks, market, checkpoint } = await loadChainData()
+  const blocks = readBlocks(path.join(root, 'data', 'blocks.ndjson'))
+  const market = readJson(path.join(root, 'data', 'market.json'))
+  const checkpoint = readJson(path.join(root, 'data', 'checkpoint.json'))
   const constants = readJson(path.join(root, 'config', 'constants.json'))
   const entities = readJson(path.join(root, 'config', 'entities.json'), { entities: {} }).entities
   const events = readJson(path.join(root, 'config', 'events.json'), { events: [] }).events

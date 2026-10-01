@@ -8,7 +8,7 @@ import { COLORS, HAIR, AXIS, TICK, CHART_HEIGHT, TipBox, Legend, yAxisProps } fr
 import { num, pct, prl, millions, usdExact, ts } from '@/lib/format'
 
 /* Miner behaviour. Every number is the output of the full-graph fate walk in scripts/prl-chain.mjs,
-   run daily by GitHub Actions and read from Turso (data/miner_behavior.json is the fallback snapshot).
+   which the prl-daily workflow runs every night and commits as data/miner_behavior.json.
    Labels are prlscan's plus the SafeTrade change-chain cluster; no thresholds, no time cutoffs. */
 
 const HELD = 'var(--s1)'
@@ -77,7 +77,7 @@ const priceAxis = (
 const priceLine = <Line yAxisId="p" type="monotone" dataKey="price" stroke={PRICE} strokeWidth={1.5} strokeDasharray="4 3" dot={{ r: 2, fill: PRICE, stroke: "none" }} isAnimationActive={false} connectNulls />
 const weekAxis = <XAxis dataKey="name" tick={TICK} tickLine={false} axisLine={{ stroke: AXIS }} minTickGap={28} tickMargin={10} />
 
-export default function MinersDashboard({ data, live }) {
+export default function MinersDashboard({ data }) {
   const [theme, setTheme] = useState('dark')
   const [units, setUnits] = useState('share')
   const [view, setView] = useState('reward')
@@ -163,7 +163,7 @@ export default function MinersDashboard({ data, live }) {
           <div className="grid gap-[7px] pb-1.5">
             <MetaRow label="Snapshot" value={`#${num(data.tip_height)} · ${ts(data.tip_time)}`} />
             <MetaRow label="Transactions" value={num(data.n_tx)} />
-            <MetaRow label="Refresh" value={live ? `daily · ${ts(Date.parse(live.updated_at) / 1000)}` : 'committed snapshot'} />
+            <MetaRow label="Refreshed" value={`${ts(Date.parse(data.generated_at) / 1000)} · nightly`} />
             <MetaRow label="Price feed" value="prlscan daily · OTC VWAP → SafeTrade → CMC" last />
           </div>
         </div>
@@ -476,7 +476,7 @@ export default function MinersDashboard({ data, live }) {
             <br />
             <span className="block text-ink2">#{num(data.tip_height)} · {ts(data.tip_time)}</span>
             <span className="block text-ink2">{num(data.n_tx)} transactions · {num(data.n_outputs)} outputs</span>
-            {live ? <span className="block text-ink2">published {ts(Date.parse(live.updated_at) / 1000)} by the daily job</span> : null}
+            <span className="block text-ink2">refreshed {ts(Date.parse(data.generated_at) / 1000)}</span>
           </p>
         </footer>
       </div>

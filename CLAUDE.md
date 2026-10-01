@@ -9,8 +9,8 @@ Every number rendered is one of three things:
 1. chain data, scraped from the explorer into `data/`,
 2. the CoinGecko price feed,
 3. a constant in `config/` that carries a `source` string,
-4. on `/miners`: the full-chain UTXO fate walk in `scripts/prl-chain.mjs`, run daily by GitHub Actions
-   and read from Turso (prlscan labels, prlscan daily price, Blockscout WPRL log).
+4. on `/miners`: the full-chain UTXO fate walk in `scripts/prl-chain.mjs` (prlscan labels, prlscan daily
+   price, Blockscout WPRL log), committed nightly as `data/miner_behavior.json`.
 
 Nothing else. There are no tunable inputs, no modelled numbers, no defaults that stand in for a
 measurement. A metric that needs an assumption to exist gets cut, not parameterised — a number the
@@ -26,9 +26,9 @@ rather than a placeholder.
 ## Where things live
 
 ```
-app/page.jsx              server component: loads the store (lib/chainData.js), packs blocks for the client
-app/miners/page.jsx       /miners: same JSON as the API (Turso `aggregates`, else data/miner_behavior.json)
-app/api/miner-behavior/   public JSON of the miner-behaviour result, edge-cached 5 min
+app/page.jsx              server component: reads the store, packs blocks for the client
+app/miners/page.jsx       /miners: reads data/miner_behavior.json
+app/api/miner-behavior/   the same file as public JSON, edge-cached 5 min
 components/MinersDashboard.jsx  client page for /miners, same primitives as Dashboard.jsx
 components/Dashboard.jsx  client: hero, KPI strip, range selector, theme toggle, wiring
 components/ui.jsx         layout primitives: Section, Stat, Kpi, Eyebrow, Notes, table, flags
@@ -36,13 +36,10 @@ components/charts.jsx     palette, axis props, tooltip, event lines, partial-day
 components/panels/        one file per section
 lib/derive.js             every derived series, pure, no I/O
 lib/emission.js           E(t) and S·t/(t+H)
-lib/db.js                 Turso (libSQL) over its HTTP pipeline API, no SDK
-lib/minerBehavior.js      loads the miner-behaviour JSON (Turso row, else snapshot) for page and API
-lib/chainData.js          loads blocks/market/checkpoint (Turso `files` copy, else committed data/), 5-min cache
 lib/explorer.mjs          scraper, including the stale action id error
 lib/store.mjs             NDJSON store and checkpoint
 config/                   constants, entities, events, gpus, electricity, overhead, explorer
-scripts/                  ingest, market, selftest, prl-chain (daily miner-behaviour job), prl-sync-chain (data/ <-> Turso)
+scripts/                  ingest, market, selftest, prl-chain (nightly miner-behaviour job)
 ```
 
 `lib/derive.js` is the single place a metric is defined. If a figure looks wrong it is either there or
@@ -63,11 +60,10 @@ npm run build
 A cold ingest from #99,000 takes roughly fifteen minutes and checkpoints as it goes, so it can be
 interrupted and resumed.
 
-Nobody runs these by hand any more: the daily GitHub Actions job (`.github/workflows/prl-daily.yml`)
-pulls the store from Turso (`files` table), runs `ingest` and `market`, pushes the store back, then
-refreshes the Miners page. The page reads the Turso copy when `TURSO_DATABASE_URL` is set and the
-committed `data/` otherwise, so `data/` in git is only the fallback. Refreshing it by hand and
-committing still works (the pull keeps whichever blocks.ndjson reaches further).
+Nobody needs to run these by hand: `.github/workflows/prl-daily.yml` runs both plus the fate walk every
+night at 18:30 UTC (00:00 IST) and commits whatever changed under `data/`. That commit is what redeploys
+the site, so the data path and the deploy path are the one Vercel has always used. Running them locally
+and committing still works exactly as before.
 
 ## Miners page
 
@@ -79,17 +75,18 @@ is drained into a rolling chain of fresh change addresses, so the SafeTrade sink
 labelled wallet + every fresh address taking >= 25% of a tx that spends a cluster address (see
 `safetrade_cluster` in the JSON).
 
-The whole thing runs once a day in GitHub Actions (`.github/workflows/prl-daily.yml`, 18:30 UTC (00:00 IST),
-`scripts/prl-chain.mjs`): pull new blocks from the explorer batch action (prlscan API fallback),
-append them to the chain dump (gzipped NDJSON chunks in Turso table `chunks`, mirrored in the
-Actions cache `.prl-cache` for speed), refresh labels, price and the WPRL log, run the walk, write
-the page JSON to Turso `aggregates` (key `miner_behavior`). `/miners` and `/api/miner-behavior`
-read that row; `data/miner_behavior.json` is the fallback until the first run publishes. The first
-run backfills from block 1 (about 4 h at the explorer's rate; if it times out, rerun, it resumes
-from the last saved chunk). Secrets: `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN` on both GitHub and
-Vercel. The explorer server action id (`ACTION` in prl-chain.mjs) rotates on explorer redeploys;
-the script falls back to prlscan per-tx fetches (slower) when it does, so a rotation degrades a
-run rather than failing it.
+`scripts/prl-chain.mjs` runs nightly: pull new blocks from the explorer batch action (prlscan API
+fallback), append them to the chain dump, refresh labels, price and the WPRL log, run the walk, write
+`data/miner_behavior.json`. There are no credentials and no external storage. The dump (~1.7 GB of
+NDJSON, gzipped into 8 MB chunks under `.prl-cache`, which is gitignored) is carried between runs by
+the Actions cache; `state.json` beside the chunks records how far the scrape got, so a run that stops
+early resumes on the next one. If the cache is ever evicted the next run re-backfills from block 1,
+about four hours, and still saves its progress.
+
+Two failure modes worth knowing. The explorer server action id (`ACTION` in prl-chain.mjs) rotates on
+explorer redeploys; the script falls back to per-tx prlscan fetches, slower but the run survives. And a
+private repo gets 2,000 free Actions minutes a month: a steady night costs about 30, the one-off
+backfill about 240, so there is headroom but not an unlimited amount.
 
 ## The scraper's one fragile part
 

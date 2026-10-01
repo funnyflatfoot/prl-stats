@@ -1,7 +1,8 @@
-# Daily refresh of both pages. Chain page: the repo's own ingest + market scripts, store synced through Turso.
-# Miners page: scrapes new blocks into Turso, reruns the fate walk, publishes the page JSON.
-# First run (manual dispatch) backfills the miner chain from block 1 in ~4-5 h; later runs take ~30 min.
-# Secrets: TURSO_DATABASE_URL, TURSO_AUTH_TOKEN. Optional: COINGECKO_API_KEY.
+# Nightly refresh of both pages. Runs the repo's own ingest + market scripts for the chain page and the
+# fate walk for the miners page, then commits the refreshed data/ files, which is what redeploys the site.
+# No credentials, no external storage: the 1.7 GB chain dump lives in the Actions cache between runs
+# (.prl-cache). If that cache is ever evicted the next run re-backfills from block 1 (~4 h) and, since it
+# saves progress either way, finishes on the following run.
 name: prl-daily
 
 on:
@@ -13,34 +14,29 @@ concurrency:
   group: prl-daily
   cancel-in-progress: false
 
+permissions:
+  contents: write   # the job commits data/ back to main
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
     timeout-minutes: 350
-    env:
-      TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
-      TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
-      COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      # ---- chain page (blocks since #99,000, CoinGecko market) ----
-      - name: Pull chain store from db
-        run: node scripts/prl-sync-chain.mjs pull
+      # ---- chain page: blocks since #99,000 and the CoinGecko market snapshot ----
       - name: Ingest new blocks
-        continue-on-error: true   # exit 2 = explorer action id rotated; headers are still persisted
+        continue-on-error: true   # exit 2 = explorer action id rotated; headers fetched so far are still persisted
         run: node scripts/ingest.mjs
       - name: Market snapshot
         continue-on-error: true   # CoinGecko rate limits; yesterday's market.json stays
         run: node scripts/market.mjs
-      - name: Push chain store to db
-        run: node scripts/prl-sync-chain.mjs push
 
-      # ---- miners page (full chain, fate walk) ----
-      - name: Restore miner chain cache
+      # ---- miners page: full-graph fate walk ----
+      - name: Restore chain dump cache
         uses: actions/cache/restore@v4
         with:
           path: .prl-cache
@@ -50,9 +46,25 @@ jobs:
         env:
           NODE_OPTIONS: --max-old-space-size=6144
         run: node scripts/prl-chain.mjs
-      - name: Save miner chain cache
+      - name: Save chain dump cache
         if: always()
         uses: actions/cache/save@v4
         with:
           path: .prl-cache
           key: prl-chain-${{ github.run_id }}
+
+      # ---- publish: the commit is the deploy ----
+      - name: Commit refreshed data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --quiet --cached; then
+            echo "no data changes"
+            exit 0
+          fi
+          TIP=$(node -e "try{console.log(require('./data/checkpoint.json').lastIngestedHeight)}catch{console.log('?')}")
+          MIN=$(node -e "try{console.log(require('./data/miner_behavior.json').tip_height)}catch{console.log('?')}")
+          git commit -m "Nightly data refresh: chain #${TIP}, miners #${MIN}"
+          git pull --rebase --autostash
+          git push
