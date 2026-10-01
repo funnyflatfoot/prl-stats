@@ -1,0 +1,98 @@
+# Build the miners page from a local pearld instead of scraping the explorer.
+# Manual for now: one run tells us whether a GitHub runner can sync the chain in a sitting, and how big
+# the datadir gets. If it does, this replaces the explorer scrape entirely (no rate limits, no server
+# action id to rotate, ~20 min instead of several nights) and prl-daily loses its miners steps.
+# Nothing here touches the nightly explorer path, so a failure costs only the run.
+name: prl-node
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prl-daily        # never run alongside the nightly job: both commit to main
+  cancel-in-progress: false
+
+jobs:
+  node:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Disk before
+        run: df -h / /mnt | sed 's/^/  /'
+
+      - name: Restore pearld datadir
+        uses: actions/cache/restore@v4
+        with:
+          path: .prl-node
+          key: prl-node-${{ github.run_id }}
+          restore-keys: prl-node-
+
+      - name: Start pearld
+        run: |
+          mkdir -p .prl-node
+          echo "PRL_RPC_USER=prl" >> $GITHUB_ENV
+          echo "PRL_RPC_PASS=$(openssl rand -hex 16)" >> $GITHUB_ENV
+      - name: Launch container
+        run: |
+          docker run -d --name pearld \
+            -p 127.0.0.1:44107:44107 \
+            -v "$PWD/.prl-node:/root/.pearld" \
+            ghcr.io/pearl-research-labs/pearl/pearld:latest \
+            --rpcuser="$PRL_RPC_USER" --rpcpass="$PRL_RPC_PASS" \
+            --rpclisten=0.0.0.0:44107 --notls
+          sleep 20
+          docker logs --tail 30 pearld
+
+      - name: Wait for sync
+        id: sync
+        env:
+          PRL_WAIT_BUDGET_MS: 10800000   # 3 h, leaving room for the dump and the walk
+        run: node scripts/prl-node-wait.mjs
+
+      - name: Dump chain from the node
+        if: steps.sync.outcome == 'success'
+        env:
+          PRL_CACHE_DIR: .prl-cache-node
+          PRL_DUMP_BUDGET_MS: 3600000
+        run: node scripts/prl-node-dump.mjs
+
+      - name: Miner behaviour
+        if: steps.sync.outcome == 'success'
+        env:
+          PRL_CACHE_DIR: .prl-cache-node
+          PRL_ANALYZE_ONLY: '1'
+          NODE_OPTIONS: --max-old-space-size=6144
+        run: node scripts/prl-chain.mjs
+
+      - name: Report
+        if: always()
+        run: |
+          echo "sync step: ${{ steps.sync.outcome }}"
+          du -sh .prl-node .prl-cache-node 2>/dev/null | sed 's/^/  /' || true
+          df -h / /mnt | sed 's/^/  /'
+          docker logs --tail 20 pearld 2>&1 | sed 's/^/  /' || true
+
+      - name: Stop pearld and hand the datadir back to the runner
+        if: always()
+        run: |
+          docker stop pearld || true
+          sudo chown -R "$USER" .prl-node || true   # the container writes as root; the cache step cannot read that
+
+      - name: Save pearld datadir
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .prl-node
+          key: prl-node-${{ github.run_id }}
+
+      - name: Commit miner data
+        if: steps.sync.outcome == 'success'
+        run: bash scripts/commit-data.sh miners data/miner_behavior.json
