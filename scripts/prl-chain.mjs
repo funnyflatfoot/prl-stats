@@ -17,6 +17,7 @@ const EXPLORER = 'https://explorer.pearlresearch.ai'
 const ACTION = '40dcb07d2a02b501b109109b0a6869d2cf455eef61' // explorer batch tx server action; rotates on explorer redeploys
 const API = 'https://api.prlscan.com/v1'
 const OUT = process.env.PRL_OUT || 'data/miner_behavior.json'
+const CONC = Number(process.env.PRL_CONCURRENCY || 4)  // the explorer's ceiling is per-IP, not per-connection
 const CHUNK_BYTES = 8e6 // uncompressed per chunk file
 const W0 = 1777248000
 const sleep = ms => new Promise(r => setTimeout(r, ms))
@@ -37,15 +38,36 @@ const readState = () => { try { return JSON.parse(readFileSync(STATE, 'utf8')) }
 const saveState = st => writeFileSync(STATE, JSON.stringify(st))
 
 // ---------- fetch helpers ----------
+// The explorer allows roughly a thousand requests from one IP and then returns 429 for several minutes.
+// A datacenter IP hits that wall far sooner than a browser does, so 429 is treated as back-pressure, not
+// an error: every worker parks until RL.until, and after RL_GIVE_UP consecutive walls the scrape stops
+// cleanly so the run still saves its progress and publishes whatever was already complete.
+const RL = { until: 0, strikes: 0, walls: 0 }
+const RL_GIVE_UP = 40  // the time budget is the real stop; this only catches a wall that never lifts
+class RateLimited extends Error { constructor() { super('rate limited by the explorer'); this.name = 'RateLimited' } }
+const DEADLINE = { at: Infinity }
+const gate = async () => { while (Date.now() < RL.until) { if (Date.now() > DEADLINE.at) throw new RateLimited(); await sleep(1000) } }
+
 async function fetchRetry(url, opts = {}, tries = 8) {
   let last
   for (let i = 0; i < tries; i++) {
+    await gate()
     try {
       const r = await fetch(url, opts)
-      if (r.status === 200) return r
+      if (r.status === 200) { RL.strikes = 0; return r }
       if (r.status === 404) return null
+      if (r.status === 429) {
+        const ra = Number(r.headers.get('retry-after')) || 0
+        RL.strikes++; RL.walls++
+        const wait = Math.min(120, ra || 15 * 2 ** Math.min(RL.strikes - 1, 3)) * 1000  // poll back every 2 min at most; the real window lifts in ~10
+        if (Date.now() > RL.until) log(`rate limited, pausing ${Math.round(wait / 1000)}s (wall ${RL.walls})`)
+        RL.until = Math.max(RL.until, Date.now() + wait)
+        if (RL.strikes >= RL_GIVE_UP) throw new RateLimited()
+        i--  // a 429 is not a failed attempt, it is a queue
+        continue
+      }
       last = `status ${r.status}`
-    } catch (e) { last = String(e) }
+    } catch (e) { if (e instanceof RateLimited) throw e; last = String(e) }
     await sleep(Math.min(20000, 500 * 2 ** i))
   }
   throw new Error(`fetch failed ${url}: ${last}`)
@@ -80,12 +102,15 @@ async function pool(items, conc, fn) { let i = 0; const out = new Array(items.le
 
 async function scrape(state) {
   const t0 = Date.now(); const budget = Number(process.env.PRL_SCRAPE_BUDGET_MS || 4.5 * 3600e3)
+  DEADLINE.at = t0 + budget
   const stopAt = process.env.PRL_STOP_AT ? Number(process.env.PRL_STOP_AT) : Infinity
-  let useExplorerTxs = true; let buf = []; let bufBytes = 0; let blocks = 0
+  let useExplorerTxs = true; let buf = []; let bufBytes = 0; let blocks = 0; let stopped = null
   const flush = () => { if (!buf.length) return; saveChunk(state.nextChunk, buf.join('\n') + '\n'); state.nextChunk++; saveState(state); log(`chunk ${state.nextChunk - 1} saved, blocks <= ${state.next - 1}`); buf = []; bufBytes = 0 }
+  try {
   while (state.next <= stopAt && Date.now() - t0 < budget) {
     const hs = []; for (let h = state.next; h < state.next + 60 && h <= stopAt; h++) hs.push(h)
-    let bl = await pool(hs, 6, explorerBlock)
+    let bl = await pool(hs, CONC, explorerBlock)
+    for (const b of bl) if (b && b.maxHeight) state.maxHeight = b.maxHeight
     const end = bl.findIndex(b => b === null); if (end >= 0) bl = bl.slice(0, end)
     if (!bl.length) break
     const ids = bl.flatMap(b => b.txids)
@@ -105,9 +130,17 @@ async function scrape(state) {
     if (bufBytes >= CHUNK_BYTES) flush()
     if (end >= 0) break // reached the tip
   }
+  } catch (e) {
+    if (!(e instanceof RateLimited)) throw e
+    stopped = 'rate limit'
+  }
   flush()
-  log(`scraped ${blocks} blocks in ${((Date.now() - t0) / 60e3).toFixed(1)} min, next block ${state.next}`)
-  return blocks
+  if (Date.now() - t0 >= budget) stopped = stopped || 'time budget'
+  const tip = state.maxHeight || null
+  const behind = tip ? Math.max(0, tip - (state.next - 1)) : null
+  log(`scraped ${blocks} blocks in ${((Date.now() - t0) / 60e3).toFixed(1)} min, next block ${state.next}` +
+      (stopped ? `, stopped early (${stopped}), ${behind} blocks behind the tip` : ', caught up to the tip'))
+  return { blocks, stopped, behind }
 }
 
 // ---------- reference data ----------
@@ -332,8 +365,16 @@ function assemble(A, price, wprl) {
 const main = async () => {
   const state = readState()
   log(`state: next block ${state.next}, chunks ${state.nextChunk}, cache files ${readdirSync(CACHE).length}`)
-  if (!process.env.PRL_ANALYZE_ONLY) await scrape(state)
+  let scraped = { stopped: null, behind: 0 }
+  if (!process.env.PRL_ANALYZE_ONLY) scraped = await scrape(state)
   if (state.nextChunk === 0) { log('no chain data yet'); return }
+  // A partial chain would publish wrong numbers (missing blocks read as "not sold yet"), so leave the
+  // committed file alone and let the next run carry on from the saved chunks.
+  if (scraped.stopped && scraped.behind > 0) {
+    const done = state.maxHeight ? ((state.next - 1) / state.maxHeight * 100).toFixed(1) : '?'
+    log(`backfill incomplete: ${done}% of the chain, ${scraped.behind} blocks behind. Not republishing; the next run resumes.`)
+    return
+  }
   let labels, price, wprl
   if (process.env.PRL_FIXTURES) { // offline test: labels.json {address:[kind,label]}, price.json {date:[usd,source]}, wprl.json {days:{date:{minted,burned}},contract,total_supply_now}
     const fx = f => JSON.parse(readFileSync(path.join(process.env.PRL_FIXTURES, f), 'utf8'))

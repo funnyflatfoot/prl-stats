@@ -85,10 +85,28 @@ the Actions cache; `state.json` beside the chunks records how far the scrape got
 early resumes on the next one. If the cache is ever evicted the next run re-backfills from block 1,
 about four hours, and still saves its progress.
 
-Two failure modes worth knowing. The explorer server action id (`ACTION` in prl-chain.mjs) rotates on
-explorer redeploys; the script falls back to per-tx prlscan fetches, slower but the run survives. And a
-private repo gets 2,000 free Actions minutes a month: a steady night costs about 30, the one-off
-backfill about 240, so there is headroom but not an unlimited amount.
+### The explorer rate-limits, and that shapes everything
+
+The explorer serves roughly a thousand requests to one IP and then returns 429 for several minutes. A
+browser on a residential connection rarely notices; a GitHub runner hits it in about two minutes. So the
+scraper treats 429 as back-pressure rather than failure: all workers park until the window lifts (polling
+back every two minutes at most), the run is bounded by its time budget, and progress is always saved to
+the cache. Crucially it will not publish a partial chain, because missing recent blocks would read as
+"not sold yet" and quietly understate selling. A short run just logs how far behind it is and leaves the
+committed file alone.
+
+The practical consequence is that the first backfill takes several nights rather than one, advancing in
+bursts of a thousand or two per window. Once the dump is complete the daily increment is about 800
+blocks, comfortably inside one window, and runs finish in half an hour. The same wall is why
+`config/explorer.config.json` keeps `concurrency` at 3: parallelism does not raise a per-IP ceiling, it
+just reaches it sooner.
+
+Two other failure modes. The explorer server action id (`ACTION` in prl-chain.mjs) rotates on explorer
+redeploys; the script falls back to per-tx prlscan fetches, slower but the run survives. And CoinGecko
+blocks most datacenter IPs on its free tier, so `market.mjs` fails from CI unless `COINGECKO_API_KEY` is
+set as a repo secret; without it the committed `market.json` simply goes stale.
+
+If Pearl would allowlist one IP or expose a node RPC, every bit of this disappears.
 
 ## The scraper's one fragile part
 
