@@ -39,7 +39,7 @@ lib/emission.js           E(t) and S·t/(t+H)
 lib/explorer.mjs          scraper, including the stale action id error
 lib/store.mjs             NDJSON store and checkpoint
 config/                   constants, entities, events, gpus, electricity, overhead, explorer
-scripts/                  ingest, market, selftest, prl-chain (nightly miner-behaviour job)
+scripts/                  ingest, market, selftest, prl-chain (nightly job), commit-data.sh (its publish step)
 ```
 
 `lib/derive.js` is the single place a metric is defined. If a figure looks wrong it is either there or
@@ -61,8 +61,10 @@ A cold ingest from #99,000 takes roughly fifteen minutes and checkpoints as it g
 interrupted and resumed.
 
 Nobody needs to run these by hand: `.github/workflows/prl-daily.yml` runs both plus the fate walk every
-night at 18:30 UTC (00:00 IST) and commits whatever changed under `data/`. That commit is what redeploys
-the site, so the data path and the deploy path are the one Vercel has always used. Running them locally
+night at 18:30 UTC (00:00 IST) and commits what changed under `data/` (via `scripts/commit-data.sh`, once
+for the chain files and again for the miner file, so the chain page publishes in about fifteen minutes and
+survives a miners walk that times out). That commit is what redeploys the site, so the data path and the
+deploy path are the one Vercel has always used. Running them locally
 and committing still works exactly as before.
 
 ## Miners page
