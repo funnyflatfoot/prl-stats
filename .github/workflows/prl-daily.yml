@@ -11,7 +11,7 @@ name: prl-daily
 
 on:
   schedule:
-    - cron: '30 18 * * *'   # 00:00 IST
+    - cron: '50 7 * * *'    # 13:20 IST
   workflow_dispatch:
 
 concurrency:

@@ -63,10 +63,10 @@ interrupted and resumed.
 Nobody needs to run these by hand. Two jobs do it, each owning one page and committing its own files
 through `scripts/commit-data.sh`:
 
-- `.github/workflows/prl-daily.yml` — 18:30 UTC (00:00 IST). Ingest and market for the chain page, then
+- `.github/workflows/prl-daily.yml` — 07:50 UTC (13:20 IST). Ingest and market for the chain page, then
   commit. Both fetch steps are `continue-on-error` and the commit runs after them, so a bad night leaves
   the committed files alone instead of taking the job down. Finishes in about fifteen minutes.
-- `.github/workflows/prl-node.yml` — 19:30 UTC (01:00 IST). Syncs a local pearld, dumps the chain from it
+- `.github/workflows/prl-node.yml` — 08:50 UTC (14:20 IST). Syncs a local pearld, dumps the chain from it
   and runs the fate walk for the miners page, then commits `data/miner_behavior.json`.
 
 They share a `concurrency` group so they never commit at once. That commit is what redeploys the site, so

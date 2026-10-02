@@ -12,7 +12,7 @@ name: prl-node
 
 on:
   schedule:
-    - cron: '30 19 * * *'   # 01:00 IST, an hour after prl-daily has published the chain
+    - cron: '50 8 * * *'    # 14:20 IST, an hour after prl-daily has published the chain
   workflow_dispatch:
 
 permissions:
