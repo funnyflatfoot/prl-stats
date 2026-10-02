@@ -5,14 +5,14 @@
 # Cost is front-loaded in the sync: about 90 minutes to sync, 13 to dump, 40 to walk. Caching the datadir
 # between runs would remove the sync, but run #1 measured it at ~9.2 GB against a 10 GB per-repo cache
 # limit and 3.5 GB of disk left to build the archive in, so it does not fit and the job is priced at a
-# cold run every time. That is why this is weekly rather than nightly: ~143 minutes a run against 2,000
-# free private-repo minutes a month. Nightly would be ~4,300. Raise the cadence if the repo goes public,
-# where minutes are free, or if the datadir ever becomes small enough to cache.
+# cold run every time. That is affordable only because the repo is public and runner minutes are free;
+# it was ~143 minutes a run against 2,000 free private minutes a month. If this ever goes private again,
+# drop the cadence to weekly or the bill arrives instead.
 name: prl-node
 
 on:
   schedule:
-    - cron: '30 19 * * 0'   # Sundays 01:00 IST. Nightly costs more runner minutes than the plan allows; see below.
+    - cron: '30 19 * * *'   # 01:00 IST, an hour after prl-daily has published the chain
   workflow_dispatch:
 
 permissions:
