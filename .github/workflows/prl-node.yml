@@ -1,11 +1,15 @@
-# Build the miners page from a local pearld instead of scraping the explorer.
-# Manual for now: one run tells us whether a GitHub runner can sync the chain in a sitting, and how big
-# the datadir gets. If it does, this replaces the explorer scrape entirely (no rate limits, no server
-# action id to rotate, ~20 min instead of several nights) and prl-daily loses its miners steps.
-# Nothing here touches the nightly explorer path, so a failure costs only the run.
+# Builds the miners page from a local pearld instead of scraping the explorer. The trial run synced the
+# chain and finished the walk, so this is now the only miners path and prl-daily has lost its miners
+# steps: no rate limit, no server action id to rotate.
+#
+# Cost is front-loaded in the sync. A cold run is about 90 minutes to sync plus 40 for the walk; once the
+# datadir cache restores, a run only catches up from the cached tip. The cache is therefore the whole
+# economics of this job, which is why the chown below matters more than it looks.
 name: prl-node
 
 on:
+  schedule:
+    - cron: '30 19 * * *'   # 01:00 IST, an hour after prl-daily has published the chain
   workflow_dispatch:
 
 permissions:
@@ -84,7 +88,13 @@ jobs:
         if: always()
         run: |
           docker stop pearld || true
-          sudo chown -R "$USER" .prl-node || true   # the container writes as root; the cache step cannot read that
+          # The container writes as root. $USER is not set in Actions' non-login shell, so the previous
+          # `chown -R "$USER"` expanded to an empty name, failed, and was swallowed by `|| true`. The
+          # datadir stayed root-owned, the cache step's tar exited 2, and a 90-minute sync was discarded.
+          # Warn rather than fail: a lost cache should not cost us the walk this run already paid for.
+          sudo chown -R "$(id -u):$(id -g)" .prl-node \
+            || echo "::warning::chown failed; the datadir cache will not save and the next run cold-syncs"
+          du -sh .prl-node | sed 's/^/  datadir: /'
 
       - name: Save pearld datadir
         if: always()

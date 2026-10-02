@@ -1,8 +1,12 @@
-# Nightly refresh of both pages. Runs the repo's own ingest + market scripts for the chain page and the
-# fate walk for the miners page, then commits the refreshed data/ files, which is what redeploys the site.
-# No credentials, no external storage: the 1.7 GB chain dump lives in the Actions cache between runs
-# (.prl-cache). If that cache is ever evicted the next run re-backfills from block 1 (~4 h) and, since it
-# saves progress either way, finishes on the following run.
+# Nightly refresh of the chain page: new blocks since #99,000 and the CoinGecko snapshot, committed as
+# soon as they are in hand.
+#
+# The miners page is no longer built here. It is built by prl-node from a local pearld, because the
+# explorer rate-limits one IP to roughly a thousand requests and a runner reaches that in two minutes,
+# which made a nightly walk impossible. Two failures compounded while it lived here: the walk died on a
+# 429, and because the single commit sat at the end of the job, a failed walk discarded a perfectly
+# good chain ingest along with it. The chain now publishes before anything that can fail, which is what
+# scripts/commit-data.sh was written for.
 name: prl-daily
 
 on:
@@ -11,7 +15,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: prl-daily
+  group: prl-daily          # shared with prl-node: both commit to main
   cancel-in-progress: false
 
 permissions:
@@ -20,51 +24,23 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    timeout-minutes: 60     # ingest and market only; the hours-long walk moved to prl-node
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      # ---- chain page: blocks since #99,000 and the CoinGecko market snapshot ----
       - name: Ingest new blocks
         continue-on-error: true   # exit 2 = explorer action id rotated; headers fetched so far are still persisted
         run: node scripts/ingest.mjs
+
       - name: Market snapshot
         continue-on-error: true   # CoinGecko rate limits; yesterday's market.json stays
         run: node scripts/market.mjs
 
-      # ---- miners page: full-graph fate walk ----
-      - name: Restore chain dump cache
-        uses: actions/cache/restore@v4
-        with:
-          path: .prl-cache
-          key: prl-chain-${{ github.run_id }}
-          restore-keys: prl-chain-
-      - name: Miner behaviour
-        env:
-          NODE_OPTIONS: --max-old-space-size=6144
-        run: node scripts/prl-chain.mjs
-      - name: Save chain dump cache
-        if: always()
-        uses: actions/cache/save@v4
-        with:
-          path: .prl-cache
-          key: prl-chain-${{ github.run_id }}
-
-      # ---- publish: the commit is the deploy ----
-      - name: Commit refreshed data
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/
-          if git diff --quiet --cached; then
-            echo "no data changes"
-            exit 0
-          fi
-          TIP=$(node -e "try{console.log(require('./data/checkpoint.json').lastIngestedHeight)}catch{console.log('?')}")
-          MIN=$(node -e "try{console.log(require('./data/miner_behavior.json').tip_height)}catch{console.log('?')}")
-          git commit -m "Nightly data refresh: chain #${TIP}, miners #${MIN}"
-          git pull --rebase --autostash
-          git push
+      # Publishes whatever the two steps above managed to fetch. Both are continue-on-error, so a bad
+      # night leaves the committed files alone rather than taking the job down; commit-data.sh no-ops
+      # when nothing changed.
+      - name: Commit chain data
+        run: bash scripts/commit-data.sh chain data/blocks.ndjson data/checkpoint.json data/market.json

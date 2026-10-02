@@ -39,7 +39,7 @@ lib/emission.js           E(t) and S·t/(t+H)
 lib/explorer.mjs          scraper, including the stale action id error
 lib/store.mjs             NDJSON store and checkpoint
 config/                   constants, entities, events, gpus, electricity, overhead, explorer
-scripts/                  ingest, market, selftest, prl-chain (nightly job), commit-data.sh (its publish step)
+scripts/                  ingest, market, selftest, prl-chain (the walk), prl-node-* (sync and dump), commit-data.sh
 ```
 
 `lib/derive.js` is the single place a metric is defined. If a figure looks wrong it is either there or
@@ -60,12 +60,21 @@ npm run build
 A cold ingest from #99,000 takes roughly fifteen minutes and checkpoints as it goes, so it can be
 interrupted and resumed.
 
-Nobody needs to run these by hand: `.github/workflows/prl-daily.yml` runs both plus the fate walk every
-night at 18:30 UTC (00:00 IST) and commits what changed under `data/` (via `scripts/commit-data.sh`, once
-for the chain files and again for the miner file, so the chain page publishes in about fifteen minutes and
-survives a miners walk that times out). That commit is what redeploys the site, so the data path and the
-deploy path are the one Vercel has always used. Running them locally
-and committing still works exactly as before.
+Nobody needs to run these by hand. Two jobs do it, each owning one page and committing its own files
+through `scripts/commit-data.sh`:
+
+- `.github/workflows/prl-daily.yml` — 18:30 UTC (00:00 IST). Ingest and market for the chain page, then
+  commit. Both fetch steps are `continue-on-error` and the commit runs after them, so a bad night leaves
+  the committed files alone instead of taking the job down. Finishes in about fifteen minutes.
+- `.github/workflows/prl-node.yml` — 19:30 UTC (01:00 IST). Syncs a local pearld, dumps the chain from it
+  and runs the fate walk for the miners page, then commits `data/miner_behavior.json`.
+
+They share a `concurrency` group so they never commit at once. That commit is what redeploys the site, so
+the data path and the deploy path are the one Vercel has always used. Running them locally and committing
+still works exactly as before.
+
+Keep this section honest when you change a workflow. The chain page once sat fifteen days stale because
+`commit-data.sh` was written and described here while `prl-daily.yml` was never updated to call it.
 
 ## Miners page
 
@@ -77,13 +86,19 @@ is drained into a rolling chain of fresh change addresses, so the SafeTrade sink
 labelled wallet + every fresh address taking >= 25% of a tx that spends a cluster address (see
 `safetrade_cluster` in the JSON).
 
-`scripts/prl-chain.mjs` runs nightly: pull new blocks from the explorer batch action (prlscan API
-fallback), append them to the chain dump, refresh labels, price and the WPRL log, run the walk, write
-`data/miner_behavior.json`. There are no credentials and no external storage. The dump (~1.7 GB of
-NDJSON, gzipped into 8 MB chunks under `.prl-cache`, which is gitignored) is carried between runs by
-the Actions cache; `state.json` beside the chunks records how far the scrape got, so a run that stops
-early resumes on the next one. If the cache is ever evicted the next run re-backfills from block 1,
-about four hours, and still saves its progress.
+`scripts/prl-chain.mjs` runs the walk and writes `data/miner_behavior.json`: refresh labels, price and
+the WPRL log, follow the graph, write the file. There are no credentials and no external storage.
+
+Where its blocks come from changed. It used to scrape them from the explorer, which is bounded by the
+rate limit described below and took several nights to backfill. `prl-node.yml` now syncs a local pearld
+in a container and `scripts/prl-node-dump.mjs` reads the chain straight off it at roughly 380 blocks a
+second, so the walk runs against a complete dump every night instead of a creeping one. The explorer
+path and its 429 handling are still in the script, and still the fallback if the node image breaks.
+
+The cost is the sync, and the Actions cache is what keeps it off the critical path: a cold run is about
+90 minutes to sync plus 40 for the walk, a warm one only catches up from the cached tip. The container
+writes the datadir as root, so the job chowns it back to the runner before the cache step — if that is
+ever skipped, `tar` fails, the cache silently does not save, and every run pays the cold sync again.
 
 ### The explorer rate-limits, and that shapes everything
 
