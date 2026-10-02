@@ -2,14 +2,17 @@
 # chain and finished the walk, so this is now the only miners path and prl-daily has lost its miners
 # steps: no rate limit, no server action id to rotate.
 #
-# Cost is front-loaded in the sync. A cold run is about 90 minutes to sync plus 40 for the walk; once the
-# datadir cache restores, a run only catches up from the cached tip. The cache is therefore the whole
-# economics of this job, which is why the chown below matters more than it looks.
+# Cost is front-loaded in the sync: about 90 minutes to sync, 13 to dump, 40 to walk. Caching the datadir
+# between runs would remove the sync, but run #1 measured it at ~9.2 GB against a 10 GB per-repo cache
+# limit and 3.5 GB of disk left to build the archive in, so it does not fit and the job is priced at a
+# cold run every time. That is why this is weekly rather than nightly: ~143 minutes a run against 2,000
+# free private-repo minutes a month. Nightly would be ~4,300. Raise the cadence if the repo goes public,
+# where minutes are free, or if the datadir ever becomes small enough to cache.
 name: prl-node
 
 on:
   schedule:
-    - cron: '30 19 * * *'   # 01:00 IST, an hour after prl-daily has published the chain
+    - cron: '30 19 * * 0'   # Sundays 01:00 IST. Nightly costs more runner minutes than the plan allows; see below.
   workflow_dispatch:
 
 permissions:
@@ -84,20 +87,35 @@ jobs:
           df -h / /mnt | sed 's/^/  /'
           docker logs --tail 20 pearld 2>&1 | sed 's/^/  /' || true
 
-      - name: Stop pearld and hand the datadir back to the runner
+      - name: Stop pearld, hand the datadir back, decide whether it can be cached
         if: always()
+        id: datadir
         run: |
           docker stop pearld || true
           # The container writes as root. $USER is not set in Actions' non-login shell, so the previous
-          # `chown -R "$USER"` expanded to an empty name, failed, and was swallowed by `|| true`. The
-          # datadir stayed root-owned, the cache step's tar exited 2, and a 90-minute sync was discarded.
-          # Warn rather than fail: a lost cache should not cost us the walk this run already paid for.
+          # `chown -R "$USER"` expanded to an empty name, failed, and was swallowed by `|| true`, leaving
+          # the datadir unreadable to the cache step's tar.
           sudo chown -R "$(id -u):$(id -g)" .prl-node \
-            || echo "::warning::chown failed; the datadir cache will not save and the next run cold-syncs"
-          du -sh .prl-node | sed 's/^/  datadir: /'
+            || echo "::warning::chown failed; the datadir cannot be read back"
+          kb=$(du -sk .prl-node | cut -f1)
+          free=$(df -k --output=avail . | tail -1)
+          echo "  datadir: $((kb / 1024)) MiB"
+          echo "  free:    $((free / 1024)) MiB"
+          # Two ceilings, both hard: the cache allows 10 GB per repository, and the archive is built on
+          # the same disk the datadir sits on. Run #1 cleared neither. Decide here rather than spend
+          # three minutes watching tar fail, and say which ceiling it was.
+          if [ "$kb" -ge 8000000 ]; then
+            echo "cacheable=no" >> "$GITHUB_OUTPUT"
+            echo "::warning::datadir is $((kb / 1024 / 1024)) GiB, over the 10 GB cache limit; skipping the save"
+          elif [ "$free" -le "$kb" ]; then
+            echo "cacheable=no" >> "$GITHUB_OUTPUT"
+            echo "::warning::only $((free / 1024 / 1024)) GiB free to archive $((kb / 1024 / 1024)) GiB; skipping the save"
+          else
+            echo "cacheable=yes" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Save pearld datadir
-        if: always()
+        if: always() && steps.datadir.outputs.cacheable == 'yes'
         uses: actions/cache/save@v4
         with:
           path: .prl-node
