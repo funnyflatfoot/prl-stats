@@ -1,8 +1,8 @@
 {
-  "lastRunAt": "2026-10-02T07:56:59.404Z",
-  "lastIngestedHeight": 122140,
-  "tip": 122140,
+  "lastRunAt": "2026-10-03T12:46:11.179Z",
+  "lastIngestedHeight": 122628,
+  "tip": 122628,
   "headersOnly": false,
   "failed": 0,
-  "status": "current"
+  "status": "complete"
 }
